@@ -10,9 +10,14 @@
 #include "visatype.h"
 #include "Device.h"
 
+enum class DEVICE_TYPE{
+    devicetype_analyzer = 0
+};
+
 class Server{
 public:
-    //Server();
+    // 连接设备
+    qint32 connectDevice(QString ip, DEVICE_TYPE devicetype);
 
 private:
     Analyzer m_analyzer;            // 矢网分析仪
