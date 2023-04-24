@@ -16,3 +16,9 @@ MainWindow::~MainWindow()
 }
 
 
+
+void MainWindow::on_btnConnect_clicked()
+{
+
+}
+
