@@ -123,5 +123,49 @@ ViStatus Analyzer::sendSetCmd(const ViSession &analyzerSession, QString opStr, Q
 
 ViStatus Analyzer::sendQueryCmd(const ViSession &analyzerSession, QString opStr, ViChar WR_Buff[])
 {
+    ViStatus status;
+    ViUInt32 retCnt;
 
+    // 添加查询符号，构建指令
+    QString cmdStr = opStr + "?";
+
+
+    // 转换数据类型
+    QByteArray tempArray = cmdStr.toLocal8Bit();
+
+    // 写入缓冲区
+    std::memcpy(WR_Buff, tempArray, BUFFER_SIZE);
+
+    // 发送指令
+    status = viWrite(m_analyzerSession, ViBuf(WR_Buff), BUFFER_SIZE, &retCnt);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "sendSetCmd error.";
+        return status;
+    }
+
+    // 等待并接收返回数据
+    QThread::msleep(50);
+    memset(WR_Buff, 0, BUFFER_SIZE);
+    status = viRead(m_analyzerSession, (ViBuf)WR_Buff, BUFFER_SIZE, &retCnt);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "reciveData error.";
+        return status;
+    }
+
+    return status;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

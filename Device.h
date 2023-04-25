@@ -40,8 +40,8 @@ private:
     // 发送设置命令
     ViStatus sendSetCmd(const ViSession &analyzerSession, QString opStr, QString dataStr);
 
-    // 发送读取命令
-
+    // 发送查询命令(包括接收数据）
+    ViStatus sendQueryCmd(const ViSession &analyzerSession, QString opStr, ViChar WR_Buff[]);
 public:
     const static int TIMEOUT = 10000;
 
