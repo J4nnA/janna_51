@@ -1,4 +1,4 @@
-// 接受上层数据，处理后，转换成qstring
+﻿// 接受上层数据，处理后，转换成qstring
 // 日后可维护多个设备
 // 返回————————
 #ifndef SERVICE_H
@@ -17,7 +17,10 @@ enum class DEVICE_TYPE{
 class Server{
 public:
     // 连接设备
-    qint32 connectDevice(QString ip, DEVICE_TYPE devicetype);
+    qint32 connectDevice(QString ip, DEVICE_TYPE deviceType);
+
+    // 设置起始频率
+    qint32 setStartFreq(double startFreq, DEVICE_TYPE deviceType);
 
 private:
     Analyzer m_analyzer;            // 矢网分析仪

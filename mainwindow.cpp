@@ -1,4 +1,4 @@
-
+﻿
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -19,6 +19,33 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnConnect_clicked()
 {
+    QString ip = ui->leDeviceIp->text();
+
+    // 连接设备
+    qint32 flag = m_server.connectDevice(ip, DEVICE_TYPE::devicetype_analyzer);
+    QString infoStr =   QString::number(flag);
+
+    // 打印返回信息
+    printInfo(infoStr);
+}
+
+// 打印信息到文本框中，其他函数调用的部分，以后可以换成其他函数
+void MainWindow::printInfo(QString infoStr)
+{
+    ui->textBrowser->append(infoStr);
+}
+
+
+void MainWindow::on_btnSetStartFreq_clicked()
+{
+   double startFreq = ui->dsbStartFreq->value();
+
+   // 设置设备起始频率
+   qint32 flag = m_server.setStartFreq(startFreq, DEVICE_TYPE::devicetype_analyzer);
+   QString infoStr = QString::number(flag);
+
+   // 打印返回信息
+   printInfo(infoStr);
 
 }
 

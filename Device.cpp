@@ -1,4 +1,4 @@
-#include "Device.h"
+﻿#include "Device.h"
 SCPI_DATA_FMT Analyzer::queryDataFmt;
 
 Analyzer::Analyzer()
@@ -13,12 +13,12 @@ Analyzer::Analyzer()
     }
 }
 
-ViStatus Analyzer::connectAnalyzer(QString ip)
+ViStatus Analyzer::connectAnalyzer(QString nameStr)
 {
     ViStatus status;
 
     // 构建资源符
-    QByteArray tempByteArr = ip.toLocal8Bit();
+    QByteArray tempByteArr = nameStr.toLocal8Bit();
     m_analyzerName = tempByteArr.data();
 
     // 建立设备会话
@@ -45,10 +45,29 @@ ViStatus Analyzer::connectAnalyzer(QString ip)
     return status;
 }
 
+ViStatus Analyzer::setStartFreq(QString startFreqStr)
+{
+    ViStatus status;
+
+    // 生成操作字符串
+    QString opStr = ":SENS:FREQ:STAR";
+
+    // 发送指令
+    status = sendSetCmd(m_analyzerSession, opStr, startFreqStr);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "setStartFreq error.";
+        return status;
+    }
+
+    return status;
+}
+
 ViStatus Analyzer::setQueryDataFmt(SCPI_DATA_FMT queryDataFmt)
 {
     ViStatus status;
 
+    // 根据不同参数，发送不同的指令
     switch(queryDataFmt)
     {
     case SCPI_DATA_FMT::s_datafmt_ASC:
@@ -58,7 +77,6 @@ ViStatus Analyzer::setQueryDataFmt(SCPI_DATA_FMT queryDataFmt)
         status = sendSetCmd(m_analyzerSession, QString(":FORM"),QString("HEX"));
         break;
     }
-
     if(status != VI_SUCCESS)
     {
         qDebug() << "setQueryDataFmt error.";
@@ -70,7 +88,7 @@ ViStatus Analyzer::setQueryDataFmt(SCPI_DATA_FMT queryDataFmt)
     return status;
 }
 
-ViStatus Analyzer::sendSetCmd(ViSession analyzerSession, QString opStr, QString dataStr)
+ViStatus Analyzer::sendSetCmd(const ViSession &analyzerSession, QString opStr, QString dataStr)
 {
     ViStatus status;
     ViUInt32 retCnt;
@@ -78,7 +96,14 @@ ViStatus Analyzer::sendSetCmd(ViSession analyzerSession, QString opStr, QString 
     QString cmdStr;
 
     // 组合指令字符串
-    cmdStr = opStr + " " + dataStr;
+    if(dataStr == nullptr)
+    {
+        cmdStr = opStr;
+    }
+    else
+    {
+        cmdStr = opStr + " " + dataStr;
+    }
 
     // 转换数据类型
     QByteArray tempArray = cmdStr.toLocal8Bit();
@@ -95,3 +120,52 @@ ViStatus Analyzer::sendSetCmd(ViSession analyzerSession, QString opStr, QString 
     }
     return status;
 }
+
+ViStatus Analyzer::sendQueryCmd(const ViSession &analyzerSession, QString opStr, ViChar WR_Buff[])
+{
+    ViStatus status;
+    ViUInt32 retCnt;
+
+    // 添加查询符号，构建指令
+    QString cmdStr = opStr + "?";
+
+
+    // 转换数据类型
+    QByteArray tempArray = cmdStr.toLocal8Bit();
+
+    // 写入缓冲区
+    std::memcpy(WR_Buff, tempArray, BUFFER_SIZE);
+
+    // 发送指令
+    status = viWrite(m_analyzerSession, ViBuf(WR_Buff), BUFFER_SIZE, &retCnt);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "sendSetCmd error.";
+        return status;
+    }
+
+    // 等待并接收返回数据
+    QThread::msleep(50);
+    memset(WR_Buff, 0, BUFFER_SIZE);
+    status = viRead(m_analyzerSession, (ViBuf)WR_Buff, BUFFER_SIZE, &retCnt);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "reciveData error.";
+        return status;
+    }
+
+    return status;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
