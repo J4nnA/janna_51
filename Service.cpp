@@ -42,3 +42,25 @@ qint32 Server::setStartFreq(double startFreq, DEVICE_TYPE deviceType)
 
     return flag;
 }
+
+QString Server::queryStartFreq(DEVICE_TYPE deviceType)
+{
+    QString startFreqStr;
+    qint32 flag;
+    ViReal64 startFreq;
+
+    // 转换数据类型
+    switch(deviceType)
+    {
+    case DEVICE_TYPE::devicetype_analyzer:
+
+        flag = m_analyzer.queryStartFreq(startFreq);
+        if(flag != 0)
+        {
+            qDebug() << "ananlyzer's queryStartFreq error.";
+        }
+        startFreqStr.sprintf("%.0f", startFreq);
+        break;
+    }
+    return startFreqStr;
+}
