@@ -44,11 +44,23 @@ void MainWindow::on_btnSetStartFreq_clicked()
 
 }
 
+void MainWindow::on_btnQueryStartFreq_clicked()
+{
+    QString infoStr;
+    // 查询起始频率
+    infoStr = m_server.queryStartFreq(DEVICE_TYPE::devicetype_analyzer);
+
+    // 打印返回信息
+    printInfo(infoStr);
+}
+
+
 // 打印信息到文本框中，其他函数调用的部分，以后可以换成其他函数
 void MainWindow::printInfo(QString infoStr)
 {
     ui->textBrowser->append(infoStr);
 }
+
 
 
 

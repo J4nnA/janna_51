@@ -22,6 +22,9 @@ public:
     // 设置起始频率
     qint32 setStartFreq(double startFreq, DEVICE_TYPE deviceType);
 
+    // 查询起始频率
+    QString queryStartFreq(DEVICE_TYPE deviceType);
+
 private:
     Analyzer m_analyzer;            // 矢网分析仪
 };

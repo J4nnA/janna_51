@@ -31,6 +31,8 @@ public:
     // 设置起始频率
     ViStatus setStartFreq(QString startFreqStr);
 
+    // 查询起始频率
+    ViStatus queryStartFreq(ViReal64 &freq);
 
 private:
 
