@@ -64,3 +64,46 @@ QString Server::queryStartFreq(DEVICE_TYPE deviceType)
     }
     return startFreqStr;
 }
+
+qint32 Server::setStopFreq(double stopFreq, DEVICE_TYPE deviceType)
+{
+    qint32 flag;
+
+    // 转换数据类型
+    QString stopFreqStr = QString::number(stopFreq);
+    switch(deviceType)
+    {
+    case DEVICE_TYPE::devicetype_analyzer:
+        flag = m_analyzer.setStopFreq(stopFreqStr);
+        break;
+    }
+    if(flag != 0)
+    {
+        qDebug() << "setDeviceStopFreq error";
+        return flag;
+    }
+
+    return flag;
+}
+
+QString Server::queryStopFreq(DEVICE_TYPE deviceType)
+{
+    QString stopFreqStr;
+    qint32 flag;
+    ViReal64 stopFreq;
+
+    // 转换数据类型
+    switch(deviceType)
+    {
+    case DEVICE_TYPE::devicetype_analyzer:
+
+        flag = m_analyzer.queryStopFreq(stopFreq);
+        if(flag != 0)
+        {
+            qDebug() << "ananlyzer's queryStopFreq error.";
+        }
+        stopFreqStr.sprintf("%.0f", stopFreq);
+        break;
+    }
+    return stopFreqStr;
+}

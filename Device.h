@@ -34,6 +34,12 @@ public:
     // 查询起始频率
     ViStatus queryStartFreq(ViReal64 &freq);
 
+    // 设置终止频率
+    ViStatus setStopFreq(QString endFreqStr);
+
+    // 查询终止频率
+    ViStatus queryStopFreq(ViReal64 &freq);
+
 private:
 
     // 设置查询数据格式

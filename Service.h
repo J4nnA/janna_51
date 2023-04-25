@@ -25,6 +25,12 @@ public:
     // 查询起始频率
     QString queryStartFreq(DEVICE_TYPE deviceType);
 
+    // 设置终止频率
+    qint32 setStopFreq(double stopFreq, DEVICE_TYPE deviceType);
+
+    // 查询终止频率
+    QString queryStopFreq(DEVICE_TYPE deviceType);
+
 private:
     Analyzer m_analyzer;            // 矢网分析仪
 };

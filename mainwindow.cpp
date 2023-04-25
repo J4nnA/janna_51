@@ -54,13 +54,35 @@ void MainWindow::on_btnQueryStartFreq_clicked()
     printInfo(infoStr);
 }
 
+void MainWindow::on_btnSetStopFreq_clicked()
+{
+    double value = ui->dsbStopFreq->value();
+    int index = ui-> cbStopFreqUnit->currentIndex();
+    value = value * pow(10.0, index * 3);
+
+    // 设置设备终止频率
+    qint32 flag = m_server.setStopFreq(value, DEVICE_TYPE::devicetype_analyzer);
+    QString infoStr = QString::number(flag);
+
+    // 打印返回信息
+    printInfo(infoStr);
+}
+
+void MainWindow::on_btnQueryStopFreq_clicked()
+{
+    QString infoStr;
+    // 查询终止频率
+    infoStr = m_server.queryStopFreq(DEVICE_TYPE::devicetype_analyzer);
+
+    // 打印返回信息
+    printInfo(infoStr);
+}
 
 // 打印信息到文本框中，其他函数调用的部分，以后可以换成其他函数
 void MainWindow::printInfo(QString infoStr)
 {
     ui->textBrowser->append(infoStr);
 }
-
 
 
 

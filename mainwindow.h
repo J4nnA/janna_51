@@ -27,6 +27,10 @@ private slots:
 
     void on_btnQueryStartFreq_clicked();
 
+    void on_btnSetStopFreq_clicked();
+
+    void on_btnQueryStopFreq_clicked();
+
 private:
     void printInfo(QString infoStr);
 

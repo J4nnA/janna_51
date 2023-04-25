@@ -80,6 +80,57 @@ ViStatus Analyzer::queryStartFreq(ViReal64 &retFreq)
         qDebug() << "queryStartFreq error.";
         return status;
     }
+
+    // 根据查询返回数据类型进行对应转换操作
+    switch(Analyzer::queryDataFmt)
+    {
+    case SCPI_DATA_FMT::s_datafmt_HEX:
+        std::memcpy(&retFreq, WR_Buff, sizeof(ViReal64));
+        break;
+    case SCPI_DATA_FMT::s_datafmt_ASC:
+        QString tempStr = WR_Buff;
+        retFreq = tempStr.toDouble();
+        break;
+    }
+
+    return status;
+}
+
+ViStatus Analyzer::setStopFreq(QString stopFreqStr)
+{
+    ViStatus status;
+
+    // 生成操作字符串
+    QString opStr = ":SENS:FREQ:STOP";
+
+    // 发送指令
+    status = sendSetCmd(m_analyzerSession, opStr, stopFreqStr);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "setStopFreq error.";
+        return status;
+    }
+    return status;
+}
+
+ViStatus Analyzer::queryStopFreq(ViReal64 &retFreq)
+{
+    ViStatus status;
+
+    // 生成操作字符串
+    QString opStr = ":SENS:FREQ:STOP";
+
+    // 缓冲区
+    ViChar WR_Buff[BUFFER_SIZE];
+
+    // 发送查询指令并接收查询结果
+    status = Analyzer::sendQueryCmd(m_analyzerSession, opStr, WR_Buff);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "queryStopFreq error.";
+        return status;
+    }
+
     // 根据查询返回数据类型进行对应转换操作
     switch(Analyzer::queryDataFmt)
     {
