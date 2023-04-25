@@ -23,6 +23,8 @@ public:
 private slots:
     void on_btnConnect_clicked();
 
+    void on_btnSetStartFreq_clicked();
+
 private:
     void printInfo(QString infoStr);
 

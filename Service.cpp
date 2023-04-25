@@ -21,3 +21,24 @@ qint32 Server::connectDevice(QString ip, DEVICE_TYPE devicetype)
     }
     return connectStatus;
 }
+
+qint32 Server::setStartFreq(double startFreq, DEVICE_TYPE deviceType)
+{
+    qint32 flag;
+
+    // 转换数据类型
+    QString startFreqStr = QString::number(startFreq);
+    switch(deviceType)
+    {
+    case DEVICE_TYPE::devicetype_analyzer:
+        flag = m_analyzer.setStartFreq(startFreqStr);
+        break;
+    }
+    if(flag != 0)
+    {
+        qDebug() << "setDeviceStartFreq error";
+        return flag;
+    }
+
+    return flag;
+}

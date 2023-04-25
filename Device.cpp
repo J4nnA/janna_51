@@ -45,10 +45,29 @@ ViStatus Analyzer::connectAnalyzer(QString nameStr)
     return status;
 }
 
+ViStatus Analyzer::setStartFreq(QString startFreqStr)
+{
+    ViStatus status;
+
+    // 生成操作字符串
+    QString opStr = ":SENS:FREQ:STAR";
+
+    // 发送指令
+    status = sendSetCmd(m_analyzerSession, opStr, startFreqStr);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "setStartFreq error.";
+        return status;
+    }
+
+    return status;
+}
+
 ViStatus Analyzer::setQueryDataFmt(SCPI_DATA_FMT queryDataFmt)
 {
     ViStatus status;
 
+    // 根据不同参数，发送不同的指令
     switch(queryDataFmt)
     {
     case SCPI_DATA_FMT::s_datafmt_ASC:
@@ -58,7 +77,6 @@ ViStatus Analyzer::setQueryDataFmt(SCPI_DATA_FMT queryDataFmt)
         status = sendSetCmd(m_analyzerSession, QString(":FORM"),QString("HEX"));
         break;
     }
-
     if(status != VI_SUCCESS)
     {
         qDebug() << "setQueryDataFmt error.";

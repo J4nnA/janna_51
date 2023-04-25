@@ -35,3 +35,17 @@ void MainWindow::printInfo(QString infoStr)
     ui->textBrowser->append(infoStr);
 }
 
+
+void MainWindow::on_btnSetStartFreq_clicked()
+{
+   double startFreq = ui->dsbStartFreq->value();
+
+   // 设置设备起始频率
+   qint32 flag = m_server.setStartFreq(startFreq, DEVICE_TYPE::devicetype_analyzer);
+   QString infoStr = QString::number(flag);
+
+   // 打印返回信息
+   printInfo(infoStr);
+
+}
+
