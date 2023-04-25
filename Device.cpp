@@ -153,7 +153,6 @@ ViStatus Analyzer::sendQueryCmd(const ViSession &analyzerSession, QString opStr,
         qDebug() << "reciveData error.";
         return status;
     }
-
     return status;
 }
 
