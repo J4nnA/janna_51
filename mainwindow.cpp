@@ -86,3 +86,16 @@ void MainWindow::printInfo(QString infoStr)
 
 
 
+
+void MainWindow::on_btnReadFormatData_clicked()
+{
+    ViReal32 data[ANALYZER_MAX_POINT_NUM];
+    long dataNum = m_server.queryCurFmtTrace(data, DEVICE_TYPE::devicetype_analyzer);
+    for(int i = 0; i < dataNum; i++)
+    {
+        QString str;
+        str.sprintf("%d:<%.3f,%.3f>", i / 2, data[i * 2], data[i * 2 + 1]);
+        ui->textBrowser->append(str);
+    }
+}
+

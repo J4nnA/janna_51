@@ -31,6 +31,8 @@ private slots:
 
     void on_btnQueryStopFreq_clicked();
 
+    void on_btnReadFormatData_clicked();
+
 private:
     void printInfo(QString infoStr);
 

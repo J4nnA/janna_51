@@ -10,6 +10,8 @@
 #include "visatype.h"
 #include "Device.h"
 
+#define ANALYZER_MAX_POINT_NUM      1600    // 矢网迹线的最大数目
+
 enum class DEVICE_TYPE{
     devicetype_analyzer = 0
 };
@@ -30,6 +32,9 @@ public:
 
     // 查询终止频率
     QString queryStopFreq(DEVICE_TYPE deviceType);
+
+    // 查询当前迹线数据
+    long queryCurFmtTrace(ViReal32 data[], DEVICE_TYPE deviceType);
 
 private:
     Analyzer m_analyzer;            // 矢网分析仪

@@ -107,3 +107,18 @@ QString Server::queryStopFreq(DEVICE_TYPE deviceType)
     }
     return stopFreqStr;
 }
+
+long Server::queryCurFmtTrace(ViReal32 data[], DEVICE_TYPE deviceType)
+{
+    long dataNum;
+
+    // 对不同仪器进行不同的读取操作
+    switch(deviceType)
+    {
+    case DEVICE_TYPE::devicetype_analyzer:
+        m_analyzer.new_queryCurFmtTrace(data, dataNum);
+        break;
+    }
+
+    return dataNum;
+}

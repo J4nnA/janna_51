@@ -8,8 +8,9 @@
 #include "visa.h"
 #include "visatype.h"
 
-#define BUFFER_SIZE           1024  // 缓存区最大尺寸
-
+#define BUFFER_SIZE           1024  // 读取单个数据时的缓冲区大小
+#define BUFFER_SIZE_PER_READ  2048  // 读取数据块时，每次读取时的缓冲区大小
+#define MAX_POINT_NUM      1600    // 矢网迹线的最大数目
 /*
  * 数据传输类型
  */
@@ -40,16 +41,21 @@ public:
     // 查询终止频率
     ViStatus queryStopFreq(ViReal64 &freq);
 
+    // 查询格式化后的当前迹线的数据(返回数据和数据数目)
+    ViStatus queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum);
+    ViStatus new_queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum);
 private:
 
     // 设置查询数据格式
     ViStatus setQueryDataFmt(SCPI_DATA_FMT queryDataFmt);
 
-    // 发送设置命令
-    ViStatus sendSetCmd(const ViSession &analyzerSession, QString opStr, QString dataStr);
+    // 查询操作
+    ViStatus querySingleData(const QString &cmd, ViReal64 &doubleValue);     // 需要重载一堆函数
+    ViStatus queryBlockData(const QString &cmd, ViChar blockData[], ViInt32& dataSize);
+    ViStatus queryASCIIData(const QString &cmd, ViChar ASCIIData[], ViInt32& dataSize);
+    // 发送指令
+    ViStatus sendCmd(const QString &cmd);
 
-    // 发送查询命令(包括接收数据）
-    ViStatus sendQueryCmd(const ViSession &analyzerSession, QString opStr, ViChar WR_Buff[]);
 public:
     const static int TIMEOUT = 10000;
 

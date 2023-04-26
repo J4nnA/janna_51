@@ -97,7 +97,7 @@
      <rect>
       <x>20</x>
       <y>400</y>
-      <width>751</width>
+      <width>761</width>
       <height>221</height>
      </rect>
     </property>
@@ -109,7 +109,7 @@
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>731</width>
+       <width>741</width>
        <height>181</height>
       </rect>
      </property>
@@ -133,7 +133,7 @@
      <rect>
       <x>30</x>
       <y>140</y>
-      <width>741</width>
+      <width>751</width>
       <height>91</height>
      </rect>
     </property>
@@ -297,6 +297,32 @@
        <string>GHz</string>
       </property>
      </item>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_5">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>240</y>
+      <width>751</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>迹线读取</string>
+    </property>
+    <widget class="QPushButton" name="btnReadFormatData">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>60</y>
+       <width>92</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>读取格式化数据</string>
+     </property>
     </widget>
    </widget>
   </widget>
