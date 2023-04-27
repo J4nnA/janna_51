@@ -20,6 +20,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
     void on_btnConnect_clicked();
 
@@ -36,6 +37,8 @@ private slots:
     void testBlockData();
     void on_pushButton_clicked();
 
+    // trans
+    void trans_testBlockData();
 private:
     void printInfo(QString infoStr);
 

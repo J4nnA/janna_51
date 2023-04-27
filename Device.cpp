@@ -235,6 +235,89 @@ ViStatus Analyzer::queryCurFmtTrace_ASCII(ViReal32 data[], ViInt32 &dataNum)
     return status;
 }
 
+ViStatus low2_readASCIIDataBuff(ViSession handle, ViChar fileBuf[], ViInt32& nRetSize)
+{
+    qDebug() << "low2_readASCIIDataBuf";
+    ViUInt32 actualCount;
+    ViStatus CurStatus = VI_SUCCESS;
+
+
+    //分次读取，每次读取SIZE_PER_READ
+    ViInt32 nReceived = 0;
+    ViUInt32 size = SIZE_PER_READ;
+    int i = 0;
+    while(1)
+    {
+        i++;
+        qDebug() << i;
+        CurStatus = viRead(handle, (ViBuf)fileBuf + nReceived, size, &actualCount);
+        if(CurStatus == VI_ERROR_TMO)
+        {
+            break;
+        }
+        else if (CurStatus == VI_SUCCESS)
+        {
+
+            break;
+        }
+
+        nReceived += actualCount;
+
+
+    }
+
+    nRetSize = nReceived;
+
+    return CurStatus;
+}
+ViStatus Analyzer::low2service_queryCurFmtTrace(ViChar charDataArray[], ViInt32 &dataNum)
+{
+    qDebug() << "Analyzer::low2service_queryCurFmtTrace";
+    ViStatus status;
+
+    // 发送查询指令
+    QString cmd = ":CALC:DATA:FDATA?";
+    status = sendCmd(cmd);
+    // 等待
+    QThread::msleep(50);
+
+    // 读数据
+    low2readASCIIDataBuff(charDataArray, dataNum);
+    return status;
+}
+
+ViStatus Analyzer::low2readASCIIDataBuff(ViChar charDataArray[], ViInt32 &dataNum)
+{
+
+    ViStatus status = VI_SUCCESS;
+    ViUInt32 retCnt;
+    ViInt32 recivedSize = 0;
+
+    // 读取数据
+    while(1)
+    {
+        status = viRead(m_analyzerSession, (ViBuf)charDataArray + recivedSize, SIZE_PER_READ, &retCnt);
+        if(status == VI_ERROR_TMO)
+        {
+            break;
+        }
+        else if (status == VI_SUCCESS)
+        {
+
+            break;
+        }
+
+        recivedSize += retCnt;
+
+
+    }
+
+
+     dataNum = recivedSize;
+
+    return status;
+}
+
 
 // test
 

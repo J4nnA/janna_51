@@ -109,12 +109,12 @@ void MainWindow::testBlockData()
 
     // 测试底层函数
     qDebug() << "nSize" << nSize;
-    m_server.test_readCurTraceFormatData(pData, MAX_POINT_NUM * 2, nSize);
+    m_server.low2Device_readCurTraceFormatData(pData, nSize);
     qDebug() << "_ nSize" << nSize;
 
     //-------------
     ui->textBrowser->append("new_data");
-    for(int i = 0; i < nSize; i++)
+    for(int i = 0; i < nSize/2; i++)
     {
         QString str;
         str.sprintf("%d:<%.3f,%.3f>", i / 2, pData[i * 2], pData[i * 2 + 1]);
@@ -123,8 +123,30 @@ void MainWindow::testBlockData()
 }
 
 
+
 void MainWindow::on_pushButton_clicked()
 {
-    testBlockData();
+    trans_testBlockData();
+}
+
+// 完成，等待替换
+void MainWindow::trans_testBlockData()
+{
+    qDebug()<< "MainWindow::trans_testBlockData";
+    ViReal32 dataArray[MAX_POINT_NUM * 2];
+    ViInt32  dataNum = 0;
+
+    qDebug() << "nSize" << dataNum;
+    // trans
+    m_server.trans_test_readCurTraceFormatData(dataArray, dataNum);
+    qDebug() << "_ nSize" << dataNum;
+
+    ui->textBrowser->append("new_data");
+    for(int i = 0; i < dataNum / 2; i++)
+    {
+        QString str;
+        str.sprintf("%d:<%.3f,%.3f>", i / 2, dataArray[i * 2], dataArray[i * 2 + 1]);
+        ui->textBrowser->append(str);
+    }
 }
 

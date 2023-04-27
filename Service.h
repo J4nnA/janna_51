@@ -38,6 +38,11 @@ public:
 
     // test
     ViStatus test_readCurTraceFormatData(ViReal32 pData[], ViInt32 bufsz, ViInt32 &nSize);
+
+    ViStatus trans_test_readCurTraceFormatData(ViReal32 pData[], ViInt32 &nSize);
+
+    // 准备进入深海
+    ViStatus low2Device_readCurTraceFormatData(ViReal32 dataArray[], ViInt32 &dataNum);
 public:
     Analyzer m_analyzer;            // 矢网分析仪
 };

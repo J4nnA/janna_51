@@ -46,8 +46,8 @@ public:
     ViStatus new_queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum);
     ViStatus test_block(ViReal32 data[], ViInt32 &dataNum);
     ViStatus queryCurFmtTrace_ASCII(ViReal32 data[], ViInt32& dataNum);
-
-
+    ViStatus low2service_queryCurFmtTrace(ViChar charDataArray[], ViInt32 &dataNum);
+    ViStatus low2readASCIIDataBuff(ViChar charDataArray[], ViInt32& dataNum);
     // 设置查询数据格式
     ViStatus setQueryDataFmt(SCPI_DATA_FMT queryDataFmt);
 

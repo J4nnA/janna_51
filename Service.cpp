@@ -208,3 +208,56 @@ ViStatus Server::test_readCurTraceFormatData(ViReal32 pData[], ViInt32 bufsz, Vi
     return curStatus;
 }
 
+ViStatus Server::trans_test_readCurTraceFormatData(ViReal32 dataArray[], ViInt32 &dataNum)
+{
+    ViStatus status;
+    ViChar   charArray[MAX_POINT_NUM * 2 * 8] = {0};
+
+    qDebug() << "Server::trans_test_readCurTraceFormatData";
+
+    // 读数据
+    status = m_analyzer.low2service_queryCurFmtTrace(charArray, dataNum);
+
+
+    //
+    status =  test_readASCIIDataBuff(m_analyzer.m_analyzerSession, charArray, dataNum);
+
+    QString str = charArray;
+    QStringList list = str.split(",");
+
+    dataNum = list.size();
+    for (int i = 0; i < dataNum; i++)
+    {
+        dataArray[i] = list.at(i).toFloat();
+    }
+    return status;
+}
+
+// 潜入深海
+ViStatus Server::low2Device_readCurTraceFormatData(ViReal32 dataArray[], ViInt32 &dataNum)
+{
+    ViStatus status;
+
+    qDebug() << "Server::low2Device_readCurTraceFormatData";
+
+    // 发送查询语句
+    QString cmd = ":CALC:DATA:FDATA?";
+    m_analyzer.sendCmd(cmd);
+
+    // 等待
+    QThread::msleep(50);
+
+    // 读数据
+    ViChar   charArray[MAX_POINT_NUM * 2 * 8] = {0};
+    status =  test_readASCIIDataBuff(m_analyzer.m_analyzerSession, charArray, dataNum);
+
+    QString str = charArray;
+    QStringList list = str.split(",");
+
+    dataNum = list.size();
+    for (int i = 0; i < dataNum; i++)
+    {
+        dataArray[i] = list.at(i).toFloat();
+    }
+    return status;
+}
