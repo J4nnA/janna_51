@@ -155,85 +155,8 @@ ViStatus Analyzer::queryStopFreq(ViReal64 &retFreq)
     return status;
 }
 
-ViStatus Analyzer::new_queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum)
-{
-    ViStatus status;
-    ViInt32 dataSize;
-    // 生成指令
-    QString cmd = ":CALC:DATA:FDATA?";
-    ViChar buf[MAX_POINT_NUM * 2 * 8] = {0};
-
-    status =  queryASCIIData(cmd, buf, dataNum);
-
-    QString str = buf;
-    QStringList list = str.split(",");
-    dataNum = list.size();
-    for (int i = 0;i < dataNum; i++)
-    {
-        data[i] = list.at(i).toFloat();
-    }
-
-    return status;
-}
-
-ViStatus Analyzer::test_block(ViReal32 data[], ViInt32 &dataNum)
-{
-    ViStatus CurStatus;
-    // 发送查询指令
-     QString cmd = ":CALC:DATA:FDATA?";
-    CurStatus =sendCmd(cmd);
-    if(CurStatus != VI_SUCCESS)qDebug() << "cmd error";
-    // 接收数据并转化
-    QThread::msleep(100);
 
 
-    ViInt32 nSize;
-    // 对应ReadCurTraceFormatData
-    ViChar   buf[MAX_POINT_NUM * 2 * 8] = {0};
-    ViStatus curStatus =  readASCIIDataBuff(m_analyzerSession, buf,nSize);
-    qDebug() << "here";
-    QString str = buf;
-    QStringList list = str.split(",");
-    nSize = list.size();
-    for (int i = 0;i<nSize;i++)
-    {
-        data[i] = list.at(i).toFloat();
-    }
-    return curStatus;
-}
-
-ViStatus Analyzer::queryCurFmtTrace_ASCII(ViReal32 data[], ViInt32 &dataNum)
-{
-    ViStatus status;
-
-    // 发送查询指令
-    QString cmd = ":CALC:DATA:FDATA?";
-    status = sendCmd(cmd);
-    if(status != VI_SUCCESS)
-    {
-        qDebug() << "send cmd error.";
-        return status;
-    }
-
-    // 等待
-    QThread::msleep(200);
-
-    // 一些临时变量，对接后删掉
-    ViChar   buf[MAX_POINT_NUM * 2 * 8] = {0};  // ViReal32 data[],,需要转化
-    ViInt32 nSize;                              // ViInt32 dataNum;
-
-    status = readASCIIDataBuff(m_analyzerSession, buf, nSize);
-
-    QString str = buf;
-    QStringList list = str.split(",");
-    nSize = list.size();
-
-    for(int i = 0; i < nSize; i++)
-    {
-        data[i] = list.at(i).toFloat();
-    }
-    return status;
-}
 
 ViStatus low2_readASCIIDataBuff(ViSession handle, ViChar fileBuf[], ViInt32& nRetSize)
 {
@@ -289,7 +212,6 @@ ViStatus Analyzer::low2service_queryCurFmtTrace(ViChar charDataArray[], ViInt32 
 ViStatus Analyzer::low2readASCIIDataBuff(ViChar charDataArray[], ViInt32 &dataNum)
 {
 
-    qDebug() << "right";
     ViStatus status = VI_SUCCESS;
     ViUInt32 retCnt;
     ViInt32 recivedSize = 0;
@@ -374,61 +296,6 @@ ViStatus Analyzer::querySingleData(const QString& cmd, ViReal64 &doubleValue)
     return status;
 }
 
-ViStatus Analyzer::queryBlockData(const QString &cmd, ViChar blockData[], ViInt32 &dataSize)
-{
-    ViStatus status;
-    ViChar tempData[10];                // 读取数据所使用的临时缓冲区
-    ViChar tempSize[2] = {0};           // 转换的中间变量
-    ViUInt32 totalSize;                 // 接收的有效数据大小
-    ViUInt32 recivedSize = 0;           // 已接收的有效数据大小
-    ViUInt32 retCnt;
-
-    // 发送查询指令
-    sendCmd(cmd);
-
-    // 接收数据并转化
-    QThread::msleep(50);
-
-    // 读取前两位字节，获取有效数据的总大小
-    status = viRead(m_analyzerSession, (ViBuf)tempData, 2, &retCnt);
-    if(status == VI_ERROR_TMO)
-    {
-        dataSize = 0;
-        qDebug() << "get dataSize error.";
-        return status;
-    }
-
-    // 将获取的有效数据大小进行保存
-    tempSize[0] = tempData[1];
-    totalSize = atoi(tempSize);
-    if(totalSize <= 0)
-    {
-        dataSize = 0;
-
-        return status;
-    }
-
-    // 循环获取有效数据，直到出错或获取到总大小的数据
-    while(1)
-    {
-        status = viRead(m_analyzerSession, (ViBuf)blockData + recivedSize, BUFFER_SIZE_PER_READ, &retCnt);
-        if(status == VI_ERROR_TMO)
-        {
-            break;
-        }
-
-        recivedSize += retCnt;
-        if(recivedSize >= totalSize)
-        {
-            break;
-        }
-    }
-    dataSize = recivedSize;
-
-
-    qDebug() << blockData;
-    return status;
-}
 
 ViStatus Analyzer::queryASCIIData(const QString &cmd, ViChar fileBuf[], ViInt32 &nRetSize)
 {

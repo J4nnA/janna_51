@@ -32,13 +32,11 @@ private slots:
 
     void on_btnQueryStopFreq_clicked();
 
-    void on_btnReadFormatData_clicked();
-
-    void testBlockData();
+//______________________________
     void on_pushButton_clicked();
 
-    // trans
     void trans_testBlockData();
+//__________________________________
 private:
     void printInfo(QString infoStr);
 

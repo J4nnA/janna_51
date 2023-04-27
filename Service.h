@@ -33,16 +33,10 @@ public:
     // 查询终止频率
     QString queryStopFreq(DEVICE_TYPE deviceType);
 
-    // 查询当前迹线数据
-    long queryCurFmtTrace(ViReal32 data[], DEVICE_TYPE deviceType);
 
-    // test
-    ViStatus test_readCurTraceFormatData(ViReal32 pData[], ViInt32 bufsz, ViInt32 &nSize);
-
-    ViStatus trans_test_readCurTraceFormatData(ViReal32 pData[], ViInt32 &nSize);
-
-    // 准备进入深海
+    //--------------------------------------------------------------
     ViStatus low2Device_readCurTraceFormatData(ViReal32 dataArray[], ViInt32 &dataNum);
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 public:
     Analyzer m_analyzer;            // 矢网分析仪
 };

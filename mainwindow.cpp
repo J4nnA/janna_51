@@ -87,43 +87,6 @@ void MainWindow::printInfo(QString infoStr)
 
 
 
-
-void MainWindow::on_btnReadFormatData_clicked()
-{
-    ViReal32 data[ANALYZER_MAX_POINT_NUM];
-    long dataNum = m_server.queryCurFmtTrace(data, DEVICE_TYPE::devicetype_analyzer);
-    for(int i = 0; i < dataNum; i++)
-    {
-        QString str;
-        str.sprintf("%d:<%.3f,%.3f>", i / 2, data[i * 2], data[i * 2 + 1]);
-        ui->textBrowser->append(str);
-    }
-}
-
-void MainWindow::testBlockData()
-{
-    ViSession temp = m_server.m_analyzer.m_analyzerSession;
-
-    ViReal32 pData[MAX_POINT_NUM * 2];
-    ViInt32  nSize = 0;
-
-    // 测试底层函数
-    qDebug() << "nSize" << nSize;
-    m_server.low2Device_readCurTraceFormatData(pData, nSize);
-    qDebug() << "_ nSize" << nSize;
-
-    //-------------
-    ui->textBrowser->append("new_data");
-    for(int i = 0; i < nSize/2; i++)
-    {
-        QString str;
-        str.sprintf("%d:<%.3f,%.3f>", i / 2, pData[i * 2], pData[i * 2 + 1]);
-        ui->textBrowser->append(str);
-    }
-}
-
-
-
 void MainWindow::on_pushButton_clicked()
 {
     trans_testBlockData();
