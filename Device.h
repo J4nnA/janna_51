@@ -44,6 +44,8 @@ public:
     // 查询格式化后的当前迹线的数据(返回数据和数据数目)
     ViStatus queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum);
     ViStatus new_queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum);
+    ViStatus test_block(ViReal32 data[], ViInt32 &dataNum);
+    ViStatus queryCurFmtTrace_ASCII(ViReal32 data[], ViInt32& dataNum);
 private:
 
     // 设置查询数据格式

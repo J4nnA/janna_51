@@ -116,9 +116,11 @@ long Server::queryCurFmtTrace(ViReal32 data[], DEVICE_TYPE deviceType)
     switch(deviceType)
     {
     case DEVICE_TYPE::devicetype_analyzer:
-        m_analyzer.new_queryCurFmtTrace(data, dataNum);
+        //m_analyzer.new_queryCurFmtTrace(data, dataNum);
+        m_analyzer.queryCurFmtTrace_ASCII(data, dataNum);
         break;
     }
 
     return dataNum;
 }
+

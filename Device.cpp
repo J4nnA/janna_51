@@ -1,5 +1,44 @@
 ﻿#include "Device.h"
 SCPI_DATA_FMT Analyzer::queryDataFmt;
+#define SIZE_PER_READ      2048  //每次读取的最大长度
+ViStatus readASCIIDataBuff(ViSession handle, ViChar fileBuf[], ViInt32& nRetSize)
+{
+
+    ViUInt32 actualCount;
+    ViStatus CurStatus = VI_SUCCESS;
+
+
+    //分次读取，每次读取SIZE_PER_READ
+    ViInt32 nReceived = 0;
+
+    int i = 0;
+    ViUInt32 size = SIZE_PER_READ;
+    while(1)
+    {
+        i++;
+        qDebug() << i;
+        CurStatus = viRead(handle, (ViBuf)fileBuf + nReceived, size, &actualCount);
+        if(CurStatus == VI_ERROR_TMO)
+        {
+            break;
+        }
+        else if (CurStatus == VI_SUCCESS)
+        {
+
+            break;
+        }
+
+        nReceived += actualCount;
+
+
+    }
+
+
+    nRetSize = nReceived;
+
+    return CurStatus;
+}
+
 
 Analyzer::Analyzer()
 {
@@ -160,6 +199,68 @@ ViStatus Analyzer::new_queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum)
 
     return status;
 }
+
+ViStatus Analyzer::test_block(ViReal32 data[], ViInt32 &dataNum)
+{
+    ViStatus CurStatus;
+    // 发送查询指令
+     QString cmd = ":CALC:DATA:FDATA?";
+    CurStatus =sendCmd(cmd);
+    if(CurStatus != VI_SUCCESS)qDebug() << "cmd error";
+    // 接收数据并转化
+    QThread::msleep(100);
+
+
+    ViInt32 nSize;
+    // 对应ReadCurTraceFormatData
+    ViChar   buf[MAX_POINT_NUM * 2 * 8] = {0};
+    ViStatus curStatus =  readASCIIDataBuff(m_analyzerSession, buf,nSize);
+    qDebug() << "here";
+    QString str = buf;
+    QStringList list = str.split(",");
+    nSize = list.size();
+    for (int i = 0;i<nSize;i++)
+    {
+        data[i] = list.at(i).toFloat();
+    }
+    return curStatus;
+}
+
+ViStatus Analyzer::queryCurFmtTrace_ASCII(ViReal32 data[], ViInt32 &dataNum)
+{
+    ViStatus status;
+
+    // 发送查询指令
+    QString cmd = ":CALC:DATA:FDATA?";
+    status = sendCmd(cmd);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "send cmd error.";
+        return status;
+    }
+
+    // 等待
+    QThread::msleep(200);
+
+    // 一些临时变量，对接后删掉
+    ViChar   buf[MAX_POINT_NUM * 2 * 8] = {0};  // ViReal32 data[],,需要转化
+    ViInt32 nSize;                              // ViInt32 dataNum;
+
+    status = readASCIIDataBuff(m_analyzerSession, buf, nSize);
+
+    QString str = buf;
+    QStringList list = str.split(",");
+    nSize = list.size();
+
+    for(int i = 0; i < nSize; i++)
+    {
+        data[i] = list.at(i).toFloat();
+    }
+    return status;
+}
+
+
+// test
 
 ViStatus Analyzer::setQueryDataFmt(SCPI_DATA_FMT queryDataFmt)
 {
