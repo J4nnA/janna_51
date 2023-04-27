@@ -41,6 +41,7 @@ public:
     // 查询终止频率
     ViStatus queryStopFreq(ViReal64 &freq);
 
+
     // 查询格式化后的当前迹线的数据(返回数据和数据数目)
     ViStatus low2service_queryCurFmtTrace(ViChar charDataArray[], ViInt32 &dataNum);
     ViStatus low2readASCIIDataBuff(ViChar charDataArray[], ViInt32& dataNum);
@@ -50,9 +51,6 @@ public:
 
     // 查询操作
     ViStatus querySingleData(const QString &cmd, ViReal64 &doubleValue);     // 需要重载一堆函数
-
-    //--------------------------------------------------------
-    ViStatus queryASCIIData(const QString &cmd, ViChar ASCIIData[], ViInt32& dataSize);
     // 发送指令
     ViStatus sendCmd(const QString &cmd);
 

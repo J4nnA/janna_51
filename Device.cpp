@@ -1,44 +1,6 @@
 ﻿#include "Device.h"
 SCPI_DATA_FMT Analyzer::queryDataFmt;
 #define SIZE_PER_READ      2048  //每次读取的最大长度
-ViStatus readASCIIDataBuff(ViSession handle, ViChar fileBuf[], ViInt32& nRetSize)
-{
-
-    ViUInt32 actualCount;
-    ViStatus CurStatus = VI_SUCCESS;
-
-
-    //分次读取，每次读取SIZE_PER_READ
-    ViInt32 nReceived = 0;
-
-    int i = 0;
-    ViUInt32 size = SIZE_PER_READ;
-    while(1)
-    {
-        i++;
-        qDebug() << i;
-        CurStatus = viRead(handle, (ViBuf)fileBuf + nReceived, size, &actualCount);
-        if(CurStatus == VI_ERROR_TMO)
-        {
-            break;
-        }
-        else if (CurStatus == VI_SUCCESS)
-        {
-
-            break;
-        }
-
-        nReceived += actualCount;
-
-
-    }
-
-
-    nRetSize = nReceived;
-
-    return CurStatus;
-}
-
 
 Analyzer::Analyzer()
 {
@@ -156,43 +118,6 @@ ViStatus Analyzer::queryStopFreq(ViReal64 &retFreq)
 }
 
 
-
-
-ViStatus low2_readASCIIDataBuff(ViSession handle, ViChar fileBuf[], ViInt32& nRetSize)
-{
-    qDebug() << "low2_readASCIIDataBuf";
-    ViUInt32 actualCount;
-    ViStatus CurStatus = VI_SUCCESS;
-
-
-    //分次读取，每次读取SIZE_PER_READ
-    ViInt32 nReceived = 0;
-    ViUInt32 size = SIZE_PER_READ;
-    int i = 0;
-    while(1)
-    {
-        i++;
-        qDebug() << i;
-        CurStatus = viRead(handle, (ViBuf)fileBuf + nReceived, size, &actualCount);
-        if(CurStatus == VI_ERROR_TMO)
-        {
-            break;
-        }
-        else if (CurStatus == VI_SUCCESS)
-        {
-
-            break;
-        }
-
-        nReceived += actualCount;
-
-
-    }
-
-    nRetSize = nReceived;
-
-    return CurStatus;
-}
 ViStatus Analyzer::low2service_queryCurFmtTrace(ViChar charDataArray[], ViInt32 &dataNum)
 {
     qDebug() << "Analyzer::low2service_queryCurFmtTrace";
@@ -242,7 +167,6 @@ ViStatus Analyzer::low2readASCIIDataBuff(ViChar charDataArray[], ViInt32 &dataNu
 }
 
 
-// test
 
 ViStatus Analyzer::setQueryDataFmt(SCPI_DATA_FMT queryDataFmt)
 {
@@ -297,75 +221,7 @@ ViStatus Analyzer::querySingleData(const QString& cmd, ViReal64 &doubleValue)
 }
 
 
-ViStatus Analyzer::queryASCIIData(const QString &cmd, ViChar fileBuf[], ViInt32 &nRetSize)
-{
-    /*
-    ViStatus status;
-    ViUInt32 retCnt;
-    ViUInt32 recivedSize = 0;           // 已接收的有效数据大小
-    // 发送查询指令
-    sendCmd(cmd);
 
-    // 接收数据并转化
-    QThread::msleep(100);
-
-    while(1)
-    {
-        status = viRead(m_analyzerSession, (ViBuf)ASCIIData, BUFFER_SIZE_PER_READ, &retCnt)
-        if(status == VI_ERROR_TMO)
-        {
-            break;
-        }
-        else if (status == VI_SUCCESS)
-        {
-
-            break;
-        }
-        recivedSize += retCnt;
-    }
-
-    dataSize = recivedSize;
-
-    return status;
-*/
-    ViUInt32 actualCount;
-    ViStatus CurStatus = VI_SUCCESS;
-
-    // 发送查询指令
-    CurStatus =sendCmd(cmd);
-    if(CurStatus != VI_SUCCESS)qDebug() << "cmd error";
-    // 接收数据并转化
-    QThread::msleep(100);
-
-    //分次读取，每次读取SIZE_PER_READ
-    ViInt32 nReceived = 0;
-    ViUInt32 size = BUFFER_SIZE_PER_READ;
-    while(1)
-    {
-        CurStatus = viRead(m_analyzerSession, (ViBuf)fileBuf + nReceived, size, &actualCount);
-        if(CurStatus == VI_SUCCESS)qDebug() << "success";
-        if(CurStatus != VI_SUCCESS)qDebug() << "error";
-        if(CurStatus == VI_ERROR_TMO)
-        {
-            break;
-        }
-        else if (CurStatus == VI_SUCCESS)
-        {
-
-            break;
-        }
-
-        nReceived += actualCount;
-
-
-    }
-
-
-    nRetSize = nReceived;
-
-    return CurStatus;
-
-}
 
 ViStatus Analyzer::sendCmd(const QString& cmd)
 {
