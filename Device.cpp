@@ -1,5 +1,8 @@
 ﻿#include "Device.h"
+
+// 声明全局变量（const的不用）
 SCPI_DATA_FMT Analyzer::queryDataFmt;
+
 #define SIZE_PER_READ      2048  //每次读取的最大长度
 
 Analyzer::Analyzer()
@@ -118,51 +121,16 @@ ViStatus Analyzer::queryStopFreq(ViReal64 &retFreq)
 }
 
 
-ViStatus Analyzer::low2service_queryCurFmtTrace(ViChar charDataArray[], ViInt32 &dataNum)
+ViStatus Analyzer::queryCurTraceFmtData(ViChar charDataArray[], ViInt32 &dataNum)
 {
-    qDebug() << "Analyzer::low2service_queryCurFmtTrace";
+    qDebug() << "queryCurTraceFmtData";
     ViStatus status;
 
-    // 发送查询指令
+
     QString cmd = ":CALC:DATA:FDATA?";
-    status = sendCmd(cmd);
-    // 等待
-    QThread::msleep(50);
 
-    // 读数据
-    low2readASCIIDataBuff(charDataArray, dataNum);
-    return status;
-}
-
-ViStatus Analyzer::low2readASCIIDataBuff(ViChar charDataArray[], ViInt32 &dataNum)
-{
-
-    ViStatus status = VI_SUCCESS;
-    ViUInt32 retCnt;
-    ViInt32 recivedSize = 0;
-
-    // 读取数据
-    while(1)
-    {
-        status = viRead(m_analyzerSession, (ViBuf)charDataArray + recivedSize, SIZE_PER_READ, &retCnt);
-        if(status == VI_ERROR_TMO)
-        {
-            break;
-        }
-        else if (status == VI_SUCCESS)
-        {
-
-            break;
-        }
-
-        recivedSize += retCnt;
-
-
-    }
-
-
-     dataNum = recivedSize;
-
+    // 查询数组数据
+    status = queryArrayData(cmd, charDataArray, dataNum);
     return status;
 }
 
@@ -220,6 +188,46 @@ ViStatus Analyzer::querySingleData(const QString& cmd, ViReal64 &doubleValue)
     return status;
 }
 
+
+ViStatus Analyzer::queryArrayData(const QString &cmd, ViChar charDataArray[], ViInt32 &dataNum)
+{
+    // 提示信息
+    qDebug() << "Analyzer::queryArrayData";
+
+    ViStatus status = VI_SUCCESS;
+    ViUInt32 retCnt;
+    ViInt32 recivedSize = 0;
+
+    // 发送查询指令
+    status = sendCmd(cmd);
+    // 等待
+    QThread::msleep(50);
+    // 根据查询返回数据类型进行对应的读取操作
+    switch(Analyzer::queryDataFmt)
+    {
+    case SCPI_DATA_FMT::s_datafmt_ASC:
+        // 读取数据
+        while(1)
+        {
+            status = viRead(m_analyzerSession, (ViBuf)charDataArray + recivedSize, SIZE_PER_READ, &retCnt);
+            if(status == VI_ERROR_TMO)
+            {
+                break;
+            }
+            else if (status == VI_SUCCESS)
+            {
+
+                break;
+            }
+            recivedSize += retCnt;
+        }
+        dataNum = recivedSize;
+        break;
+    }
+
+
+    return status;
+}
 
 
 

@@ -8,9 +8,6 @@
 #include "visa.h"
 #include "visatype.h"
 
-#define BUFFER_SIZE           1024  // 读取单个数据时的缓冲区大小
-#define BUFFER_SIZE_PER_READ  2048  // 读取数据块时，每次读取时的缓冲区大小
-#define MAX_POINT_NUM      1600    // 矢网迹线的最大数目
 /*
  * 数据传输类型
  */
@@ -43,26 +40,31 @@ public:
 
 
     // 查询格式化后的当前迹线的数据(返回数据和数据数目)
-    ViStatus low2service_queryCurFmtTrace(ViChar charDataArray[], ViInt32 &dataNum);
-    ViStatus low2readASCIIDataBuff(ViChar charDataArray[], ViInt32& dataNum);
+    ViStatus queryCurTraceFmtData(ViChar charDataArray[], ViInt32 &dataNum);
 
+
+private:
     // 设置查询数据格式
     ViStatus setQueryDataFmt(SCPI_DATA_FMT queryDataFmt);
 
     // 查询操作
     ViStatus querySingleData(const QString &cmd, ViReal64 &doubleValue);     // 需要重载一堆函数
+    ViStatus queryArrayData(const QString &cmd, ViChar charDataArray[], ViInt32& dataNum);
+                                    // 目前只能实现ascii码的读取
     // 发送指令
     ViStatus sendCmd(const QString &cmd);
 
 
 public:
-    const static int TIMEOUT = 10000;
+    const static qint32 TIMEOUT = 10000;
+    const static qint32 BUFFER_SIZE = 1024;
+    const static qint32 BUFFER_SIZE_PER_READ = 2048;
+    const static qint32 MAX_POINT_NUM = 1600;
 
-public:
+private:
     ViSession m_analyzerSession;            // 设备会话
     ViSession m_defaultRM;                  // 默认资源管理器会话
     ViRsrc m_analyzerName;                  // 分析仪资源符
-
     static SCPI_DATA_FMT queryDataFmt;      // 查询返回数据类型
 };
 

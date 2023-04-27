@@ -79,37 +79,35 @@ void MainWindow::on_btnQueryStopFreq_clicked()
     printInfo(infoStr);
 }
 
+
+void MainWindow::on_btnReadFormatData_clicked()
+{
+    // 提示信息
+    qDebug()<< "MainWindow::on_btnReadFormatData_clicked";
+
+    // 接收数据的数组，以及获取数据个数的变量
+    ViReal32 dataArray[Server::DEVICE_MAX_POINT_NUM * 2];
+    ViInt32  dataNum = 0;
+
+    // 请求服务
+    m_server.queryCurTraceFmtData(dataArray, dataNum, DEVICE_TYPE::devicetype_analyzer);
+    qDebug() << "MainWindow::totalNum: " << dataNum;
+
+    ui->textBrowser->append("dataArray: ");
+
+    for(int i = 0; i < dataNum / 2; i++)
+    {
+        QString str;
+        str.sprintf("%d: <%.3f,%.3f>", i / 2, dataArray[i * 2], dataArray[i * 2 + 1]);
+        ui->textBrowser->append(str);
+    }
+}
+
+
 // 打印信息到文本框中，其他函数调用的部分，以后可以换成其他函数
 void MainWindow::printInfo(QString infoStr)
 {
     ui->textBrowser->append(infoStr);
 }
 
-
-
-void MainWindow::on_pushButton_clicked()
-{
-    trans_testBlockData();
-}
-
-// 完成，等待替换
-void MainWindow::trans_testBlockData()
-{
-    qDebug()<< "MainWindow::trans_testBlockData";
-    ViReal32 dataArray[MAX_POINT_NUM * 2];
-    ViInt32  dataNum = 0;
-
-    qDebug() << "nSize" << dataNum;
-
-    m_server.low2Device_readCurTraceFormatData(dataArray, dataNum);
-    qDebug() << "_ nSize" << dataNum;
-
-    ui->textBrowser->append("new_data");
-    for(int i = 0; i < dataNum / 2; i++)
-    {
-        QString str;
-        str.sprintf("%d:<%.3f,%.3f>", i / 2, dataArray[i * 2], dataArray[i * 2 + 1]);
-        ui->textBrowser->append(str);
-    }
-}
 

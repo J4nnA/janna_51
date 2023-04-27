@@ -6,7 +6,6 @@
 #include <QString>
 #include "Service.h"
 
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -32,11 +31,8 @@ private slots:
 
     void on_btnQueryStopFreq_clicked();
 
-//______________________________
-    void on_pushButton_clicked();
+    void on_btnReadFormatData_clicked();
 
-    void trans_testBlockData();
-//__________________________________
 private:
     void printInfo(QString infoStr);
 

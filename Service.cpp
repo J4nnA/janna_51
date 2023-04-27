@@ -109,29 +109,28 @@ QString Server::queryStopFreq(DEVICE_TYPE deviceType)
     return stopFreqStr;
 }
 
-
-
-
-// 潜入深海
-ViStatus Server::low2Device_readCurTraceFormatData(ViReal32 dataArray[], ViInt32 &dataNum)
+qint32 Server::queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, DEVICE_TYPE deviceType)
 {
-    ViStatus status;
+    qDebug() << "Server::queryCurTraceFmtData";
+    qint32 flag;
 
-    qDebug() << "Server::low2Device_readCurTraceFormatData";
-    qDebug() << "right server.";
-
-
-    // 读数据
-    ViChar   charArray[MAX_POINT_NUM * 2 * 8] = {0};
-    status = m_analyzer.low2service_queryCurFmtTrace(charArray, dataNum);
-
-    QString str = charArray;
-    QStringList list = str.split(",");
-
-    dataNum = list.size();
-    for (int i = 0; i < dataNum; i++)
+    switch(deviceType)
     {
-        dataArray[i] = list.at(i).toFloat();
+    case DEVICE_TYPE::devicetype_analyzer:
+
+        // 获取数据
+        ViChar   charArray[Analyzer::MAX_POINT_NUM * 2 * 8] = {0};
+        flag = m_analyzer.queryCurTraceFmtData(charArray, dataNum);
+
+        // 转换数据格式
+        QString str = charArray;
+        QStringList list = str.split(",");
+        dataNum = list.size();
+        for (int i = 0; i < dataNum; i++)
+        {
+            dataArray[i] = list.at(i).toFloat();
+        }
     }
-    return status;
+
+    return flag;
 }
