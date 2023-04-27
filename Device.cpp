@@ -155,30 +155,6 @@ ViStatus Analyzer::queryStopFreq(ViReal64 &retFreq)
     return status;
 }
 
-
-
-ViStatus Analyzer::queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum)
-{
-    ViStatus status;
-    ViInt32 dataSize;
-    // 生成指令
-    QString cmd = ":CALC:DATA:FDATA?";
-
-    // 进行查询
-    status = queryBlockData(cmd, (ViChar*)data, dataSize);
-    if(status != VI_SUCCESS)
-    {
-        qDebug() << "queryCurFmtTrace error.";
-        return status;
-    }
-
-    dataNum = dataSize/sizeof(ViReal32);
-
-
-    return status;
-
-}
-
 ViStatus Analyzer::new_queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum)
 {
     ViStatus status;
@@ -382,12 +358,9 @@ ViStatus Analyzer::queryASCIIData(const QString &cmd, ViChar fileBuf[], ViInt32 
     // 接收数据并转化
     QThread::msleep(100);
 
-    int i = 0;
     while(1)
     {
-        status = viRead(m_analyzerSession, (ViBuf)ASCIIData, BUFFER_SIZE_PER_READ, &retCnt);
-        if(status == VI_SUCCESS)qDebug() << "success:" << i;
-        if(status != VI_SUCCESS)qDebug() << "error: \"i\" is " << i;
+        status = viRead(m_analyzerSession, (ViBuf)ASCIIData, BUFFER_SIZE_PER_READ, &retCnt)
         if(status == VI_ERROR_TMO)
         {
             break;
@@ -397,7 +370,6 @@ ViStatus Analyzer::queryASCIIData(const QString &cmd, ViChar fileBuf[], ViInt32 
 
             break;
         }
-        i++;
         recivedSize += retCnt;
     }
 

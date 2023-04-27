@@ -36,7 +36,9 @@ public:
     // 查询当前迹线数据
     long queryCurFmtTrace(ViReal32 data[], DEVICE_TYPE deviceType);
 
-private:
+    // test
+    ViStatus test_readCurTraceFormatData(ViReal32 pData[], ViInt32 bufsz, ViInt32 &nSize);
+public:
     Analyzer m_analyzer;            // 矢网分析仪
 };
 

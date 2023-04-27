@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -97,5 +98,33 @@ void MainWindow::on_btnReadFormatData_clicked()
         str.sprintf("%d:<%.3f,%.3f>", i / 2, data[i * 2], data[i * 2 + 1]);
         ui->textBrowser->append(str);
     }
+}
+
+void MainWindow::testBlockData()
+{
+    ViSession temp = m_server.m_analyzer.m_analyzerSession;
+
+    ViReal32 pData[MAX_POINT_NUM * 2];
+    ViInt32  nSize = 0;
+
+    // 测试底层函数
+    qDebug() << "nSize" << nSize;
+    m_server.test_readCurTraceFormatData(pData, MAX_POINT_NUM * 2, nSize);
+    qDebug() << "_ nSize" << nSize;
+
+    //-------------
+    ui->textBrowser->append("new_data");
+    for(int i = 0; i < nSize; i++)
+    {
+        QString str;
+        str.sprintf("%d:<%.3f,%.3f>", i / 2, pData[i * 2], pData[i * 2 + 1]);
+        ui->textBrowser->append(str);
+    }
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    testBlockData();
 }
 

@@ -33,8 +33,12 @@ private slots:
 
     void on_btnReadFormatData_clicked();
 
+    void testBlockData();
+    void on_pushButton_clicked();
+
 private:
     void printInfo(QString infoStr);
+
 
 private:
     Ui::MainWindow *ui;

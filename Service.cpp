@@ -1,5 +1,6 @@
 ﻿#include "Service.h"
-
+#define SIZE_PER_READ 2048
+#define BUFFER_SENDSIZE    64
 
 qint32 Server::connectDevice(QString ip, DEVICE_TYPE devicetype)
 {
@@ -122,5 +123,88 @@ long Server::queryCurFmtTrace(ViReal32 data[], DEVICE_TYPE deviceType)
     }
 
     return dataNum;
+}
+
+ViStatus test_readASCIIDataBuff(ViSession handle, ViChar fileBuf[], ViInt32& nRetSize)
+{
+
+    ViUInt32 actualCount;
+    ViStatus CurStatus = VI_SUCCESS;
+
+
+    //分次读取，每次读取SIZE_PER_READ
+    ViInt32 nReceived = 0;
+    ViUInt32 size = SIZE_PER_READ;
+    int i = 0;
+    while(1)
+    {
+        i++;
+        qDebug() << i;
+        CurStatus = viRead(handle, (ViBuf)fileBuf + nReceived, size, &actualCount);
+        if(CurStatus == VI_ERROR_TMO)
+        {
+            break;
+        }
+        else if (CurStatus == VI_SUCCESS)
+        {
+
+            break;
+        }
+
+        nReceived += actualCount;
+
+
+    }
+
+
+    nRetSize = nReceived;
+
+    return CurStatus;
+}
+ViStatus test_settingCommand(ViSession handle,
+                        ViChar* pCmd,
+                        ViChar* pVal)
+{
+    if (nullptr == pCmd)
+    {
+        return -1;
+    }
+    ViChar wrtBuf[BUFFER_SIZE];
+    ViUInt32 retCnt;
+    if (nullptr == pVal)//无参数的情况
+    {
+        sprintf(wrtBuf,"%s", pCmd);
+    }
+    else
+    {
+        sprintf(wrtBuf,"%s %s", pCmd, pVal);
+    }
+    QString cmd = wrtBuf;
+    viClear(handle);
+    ViStatus status = viWrite(handle, (ViBuf)wrtBuf, BUFFER_SENDSIZE, &retCnt);
+    QThread::msleep(300);
+    return  status;
+}
+
+
+ViStatus Server::test_readCurTraceFormatData(ViReal32 pData[], ViInt32 bufsz, ViInt32 &nSize)
+{
+    // setQueryResultDataFormat(s_datafmt_HEX);
+    //1.发送命令
+    QString cmd = ":CALC:DATA:FDATA?";
+    m_analyzer.sendCmd(cmd);
+
+    // 读数据
+    ViChar   buf[MAX_POINT_NUM * 2 * 8] = {0};
+    ViStatus curStatus =  test_readASCIIDataBuff(m_analyzer.m_analyzerSession, buf, nSize);
+    qDebug() << "here";
+    QString str = buf;
+    QStringList list = str.split(",");
+    nSize = list.size();
+    for (int i = 0;i<nSize;i++)
+    {
+        pData[i] = list.at(i).toFloat();
+    }
+    return curStatus;
 }
 

@@ -46,7 +46,7 @@ public:
     ViStatus new_queryCurFmtTrace(ViReal32 data[], ViInt32 &dataNum);
     ViStatus test_block(ViReal32 data[], ViInt32 &dataNum);
     ViStatus queryCurFmtTrace_ASCII(ViReal32 data[], ViInt32& dataNum);
-private:
+
 
     // 设置查询数据格式
     ViStatus setQueryDataFmt(SCPI_DATA_FMT queryDataFmt);
@@ -58,10 +58,11 @@ private:
     // 发送指令
     ViStatus sendCmd(const QString &cmd);
 
+
 public:
     const static int TIMEOUT = 10000;
 
-private:
+public:
     ViSession m_analyzerSession;            // 设备会话
     ViSession m_defaultRM;                  // 默认资源管理器会话
     ViRsrc m_analyzerName;                  // 分析仪资源符
