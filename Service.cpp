@@ -219,9 +219,6 @@ ViStatus Server::trans_test_readCurTraceFormatData(ViReal32 dataArray[], ViInt32
     status = m_analyzer.low2service_queryCurFmtTrace(charArray, dataNum);
 
 
-    //
-    status =  test_readASCIIDataBuff(m_analyzer.m_analyzerSession, charArray, dataNum);
-
     QString str = charArray;
     QStringList list = str.split(",");
 
@@ -239,17 +236,12 @@ ViStatus Server::low2Device_readCurTraceFormatData(ViReal32 dataArray[], ViInt32
     ViStatus status;
 
     qDebug() << "Server::low2Device_readCurTraceFormatData";
+    qDebug() << "right server.";
 
-    // 发送查询语句
-    QString cmd = ":CALC:DATA:FDATA?";
-    m_analyzer.sendCmd(cmd);
-
-    // 等待
-    QThread::msleep(50);
 
     // 读数据
     ViChar   charArray[MAX_POINT_NUM * 2 * 8] = {0};
-    status =  test_readASCIIDataBuff(m_analyzer.m_analyzerSession, charArray, dataNum);
+    status = m_analyzer.low2service_queryCurFmtTrace(charArray, dataNum);
 
     QString str = charArray;
     QStringList list = str.split(",");

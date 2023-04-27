@@ -137,8 +137,8 @@ void MainWindow::trans_testBlockData()
     ViInt32  dataNum = 0;
 
     qDebug() << "nSize" << dataNum;
-    // trans
-    m_server.trans_test_readCurTraceFormatData(dataArray, dataNum);
+
+    m_server.low2Device_readCurTraceFormatData(dataArray, dataNum);
     qDebug() << "_ nSize" << dataNum;
 
     ui->textBrowser->append("new_data");

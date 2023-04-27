@@ -289,6 +289,7 @@ ViStatus Analyzer::low2service_queryCurFmtTrace(ViChar charDataArray[], ViInt32 
 ViStatus Analyzer::low2readASCIIDataBuff(ViChar charDataArray[], ViInt32 &dataNum)
 {
 
+    qDebug() << "right";
     ViStatus status = VI_SUCCESS;
     ViUInt32 retCnt;
     ViInt32 recivedSize = 0;
