@@ -10,6 +10,7 @@
 #include <QTextStream>
 #include <QVector>
 #include "Service.h"
+#include "plotwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -42,13 +43,20 @@ private slots:
 
     void on_btnReadSpecFile_clicked();
 
+    void on_btnReadAllFile_clicked();
+
+    void on_btnPlotGraph_clicked();
+
 private:
     void printInfo(QString infoStr);
 
     bool saveDataToFile(const QString& dirPath, const QString& pexfix, const qint32& collectNum, const qint32 &timeInterval);
 
     // 根据文件名，读取特定文件
-    QVector<QVector<double>> readFileByName(const QString& fileName);
+   QVector<double> readFileByName(const QString& fileName);
+
+   // 读取同一路径下的所有文件的内容
+   QVector<QVector<double>> readFilesSameDir(const QString dirctoryPath);
 private:
     Ui::MainWindow *ui;
 

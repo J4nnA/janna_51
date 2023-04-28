@@ -496,7 +496,7 @@
       <string>读取全部文件，转数组</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn">
+    <widget class="QPushButton" name="btnPlotGraph">
      <property name="geometry">
       <rect>
        <x>450</x>

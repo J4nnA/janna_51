@@ -10,7 +10,7 @@
 #include "visatype.h"
 #include "Device.h"
 
-enum class DEVICE_TYPE{
+enum class M_DEVICE_TYPE{
     devicetype_analyzer = 0
 };
 
@@ -18,22 +18,22 @@ class Server{
 public:
 
     // 连接设备
-    qint32 connectDevice(QString ip, DEVICE_TYPE deviceType);
+    qint32 connectDevice(QString ip, M_DEVICE_TYPE deviceType);
 
     // 设置起始频率
-    qint32 setStartFreq(double startFreq, DEVICE_TYPE deviceType);
+    qint32 setStartFreq(double startFreq, M_DEVICE_TYPE deviceType);
 
     // 查询起始频率
-    QString queryStartFreq(DEVICE_TYPE deviceType);
+    QString queryStartFreq(M_DEVICE_TYPE deviceType);
 
     // 设置终止频率
-    qint32 setStopFreq(double stopFreq, DEVICE_TYPE deviceType);
+    qint32 setStopFreq(double stopFreq, M_DEVICE_TYPE deviceType);
 
     // 查询终止频率
-    QString queryStopFreq(DEVICE_TYPE deviceType);
+    QString queryStopFreq(M_DEVICE_TYPE deviceType);
 
     // 查询当前迹线格式化数据
-    qint32 queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, DEVICE_TYPE deviceType);
+    qint32 queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, M_DEVICE_TYPE deviceType);
 
 public:
     const static qint32 DEVICE_MAX_POINT_NUM = 1600;          // 所有设备一次所能获得的最大数据个数

@@ -2,7 +2,7 @@
 #define SIZE_PER_READ 2048
 #define BUFFER_SENDSIZE    64
 
-qint32 Server::connectDevice(QString ip, DEVICE_TYPE devicetype)
+qint32 Server::connectDevice(QString ip, M_DEVICE_TYPE devicetype)
 {
     qint32 connectStatus;
 
@@ -11,7 +11,7 @@ qint32 Server::connectDevice(QString ip, DEVICE_TYPE devicetype)
 
     // 根据设备类型，调用不同的连接函数
     switch(devicetype){
-    case DEVICE_TYPE::devicetype_analyzer:
+    case M_DEVICE_TYPE::devicetype_analyzer:
         connectStatus = m_analyzer.connectAnalyzer(nameStr);
         break;
     }
@@ -23,7 +23,7 @@ qint32 Server::connectDevice(QString ip, DEVICE_TYPE devicetype)
     return connectStatus;
 }
 
-qint32 Server::setStartFreq(double startFreq, DEVICE_TYPE deviceType)
+qint32 Server::setStartFreq(double startFreq, M_DEVICE_TYPE deviceType)
 {
     qint32 flag;
 
@@ -31,7 +31,7 @@ qint32 Server::setStartFreq(double startFreq, DEVICE_TYPE deviceType)
     QString startFreqStr = QString::number(startFreq);
     switch(deviceType)
     {
-    case DEVICE_TYPE::devicetype_analyzer:
+    case M_DEVICE_TYPE::devicetype_analyzer:
         flag = m_analyzer.setStartFreq(startFreqStr);
         break;
     }
@@ -44,7 +44,7 @@ qint32 Server::setStartFreq(double startFreq, DEVICE_TYPE deviceType)
     return flag;
 }
 
-QString Server::queryStartFreq(DEVICE_TYPE deviceType)
+QString Server::queryStartFreq(M_DEVICE_TYPE deviceType)
 {
     QString startFreqStr;
     qint32 flag;
@@ -53,7 +53,7 @@ QString Server::queryStartFreq(DEVICE_TYPE deviceType)
     // 转换数据类型
     switch(deviceType)
     {
-    case DEVICE_TYPE::devicetype_analyzer:
+    case M_DEVICE_TYPE::devicetype_analyzer:
 
         flag = m_analyzer.queryStartFreq(startFreq);
         if(flag != 0)
@@ -66,7 +66,7 @@ QString Server::queryStartFreq(DEVICE_TYPE deviceType)
     return startFreqStr;
 }
 
-qint32 Server::setStopFreq(double stopFreq, DEVICE_TYPE deviceType)
+qint32 Server::setStopFreq(double stopFreq, M_DEVICE_TYPE deviceType)
 {
     qint32 flag;
 
@@ -74,7 +74,7 @@ qint32 Server::setStopFreq(double stopFreq, DEVICE_TYPE deviceType)
     QString stopFreqStr = QString::number(stopFreq);
     switch(deviceType)
     {
-    case DEVICE_TYPE::devicetype_analyzer:
+    case M_DEVICE_TYPE::devicetype_analyzer:
         flag = m_analyzer.setStopFreq(stopFreqStr);
         break;
     }
@@ -87,7 +87,7 @@ qint32 Server::setStopFreq(double stopFreq, DEVICE_TYPE deviceType)
     return flag;
 }
 
-QString Server::queryStopFreq(DEVICE_TYPE deviceType)
+QString Server::queryStopFreq(M_DEVICE_TYPE deviceType)
 {
     QString stopFreqStr;
     qint32 flag;
@@ -96,7 +96,7 @@ QString Server::queryStopFreq(DEVICE_TYPE deviceType)
     // 转换数据类型
     switch(deviceType)
     {
-    case DEVICE_TYPE::devicetype_analyzer:
+    case M_DEVICE_TYPE::devicetype_analyzer:
 
         flag = m_analyzer.queryStopFreq(stopFreq);
         if(flag != 0)
@@ -109,14 +109,14 @@ QString Server::queryStopFreq(DEVICE_TYPE deviceType)
     return stopFreqStr;
 }
 
-qint32 Server::queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, DEVICE_TYPE deviceType)
+qint32 Server::queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, M_DEVICE_TYPE deviceType)
 {
     qDebug() << "Server::queryCurTraceFmtData";
     qint32 flag;
 
     switch(deviceType)
     {
-    case DEVICE_TYPE::devicetype_analyzer:
+    case M_DEVICE_TYPE::devicetype_analyzer:
 
         // 获取数据
         ViChar   charArray[Analyzer::MAX_POINT_NUM * 2 * 8] = {0};

@@ -1,4 +1,5 @@
 QT       += core gui
+QT += core gui widgets printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,15 +13,20 @@ SOURCES += \
     Device.cpp \
     Service.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    plotwindow.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
     Device.h \
     Service.h \
-    mainwindow.h
+    mainwindow.h \
+    plotwindow.h \
+    qcustomplot.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    plotwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
