@@ -48,6 +48,8 @@ private:
     Ui::MainWindow *ui;
 
     Server m_server;                // 下层服务
+
+    QString dirPath;                // 数据存放格式
 };
 
 #endif // MAINWINDOW_H

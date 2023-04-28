@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
-    <height>658</height>
+    <width>699</width>
+    <height>749</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -95,8 +95,8 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>400</y>
+      <x>40</x>
+      <y>490</y>
       <width>631</width>
       <height>221</height>
      </rect>
@@ -118,8 +118,8 @@
    <widget class="QPushButton" name="btnCore">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>370</y>
+      <x>580</x>
+      <y>470</y>
       <width>92</width>
       <height>29</height>
      </rect>
@@ -342,7 +342,7 @@
      <widget class="QPushButton" name="btnTempTest">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>80</x>
         <y>40</y>
         <width>81</width>
         <height>20</height>
@@ -432,13 +432,91 @@
      </widget>
     </widget>
    </widget>
+   <widget class="QGroupBox" name="groupBox_6">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>360</y>
+      <width>621</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>图像绘制</string>
+    </property>
+    <widget class="QPushButton" name="btnReadSpecFile">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>141</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>读取特定文件，转成数组</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnQueryDefaultPath">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>60</y>
+       <width>131</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询默认数据文件路径</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leFileName">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>281</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>test_data_000.txt</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnReadAllFile">
+     <property name="geometry">
+      <rect>
+       <x>450</x>
+       <y>30</y>
+       <width>161</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>读取全部文件，转数组</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn">
+     <property name="geometry">
+      <rect>
+       <x>450</x>
+       <y>60</y>
+       <width>161</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>读取全部文件，绘制图像</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>811</width>
+     <width>699</width>
      <height>21</height>
     </rect>
    </property>
