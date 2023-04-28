@@ -19,7 +19,7 @@
      <rect>
       <x>30</x>
       <y>70</y>
-      <width>751</width>
+      <width>631</width>
       <height>71</height>
      </rect>
     </property>
@@ -45,8 +45,8 @@
      <rect>
       <x>30</x>
       <y>0</y>
-      <width>751</width>
-      <height>61</height>
+      <width>631</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="title">
@@ -95,9 +95,9 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>30</x>
       <y>400</y>
-      <width>761</width>
+      <width>631</width>
       <height>221</height>
      </rect>
     </property>
@@ -109,7 +109,7 @@
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>741</width>
+       <width>611</width>
        <height>181</height>
       </rect>
      </property>
@@ -118,7 +118,7 @@
    <widget class="QPushButton" name="btnCore">
     <property name="geometry">
      <rect>
-      <x>670</x>
+      <x>560</x>
       <y>370</y>
       <width>92</width>
       <height>29</height>
@@ -133,8 +133,8 @@
      <rect>
       <x>30</x>
       <y>140</y>
-      <width>751</width>
-      <height>91</height>
+      <width>631</width>
+      <height>101</height>
      </rect>
     </property>
     <property name="title">
@@ -303,8 +303,8 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>240</y>
-      <width>751</width>
+      <y>250</y>
+      <width>631</width>
       <height>111</height>
      </rect>
     </property>
@@ -314,8 +314,8 @@
     <widget class="QPushButton" name="btnReadFormatData">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>60</y>
+       <x>20</x>
+       <y>70</y>
        <width>92</width>
        <height>29</height>
       </rect>
@@ -323,6 +323,113 @@
      <property name="text">
       <string>读取格式化数据</string>
      </property>
+    </widget>
+    <widget class="QFrame" name="frame">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>30</y>
+       <width>491</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QPushButton" name="btnTempTest">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>btnTempTest</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="leCollectNum">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>10</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>3</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>10</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>采集数目</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="leTimeInterval">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>10</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1000</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>10</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>时间间隔</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="leFilePrefix">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>10</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>test_data_</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>文件前缀</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

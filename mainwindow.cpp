@@ -93,6 +93,7 @@ void MainWindow::on_btnReadFormatData_clicked()
     m_server.queryCurTraceFmtData(dataArray, dataNum, DEVICE_TYPE::devicetype_analyzer);
     qDebug() << "MainWindow::totalNum: " << dataNum;
 
+    // 打印操作---日后可替换为其他功能的实现
     ui->textBrowser->append("dataArray: ");
 
     for(int i = 0; i < dataNum / 2; i++)
@@ -103,11 +104,85 @@ void MainWindow::on_btnReadFormatData_clicked()
     }
 }
 
+void MainWindow::on_btnTempTest_clicked()
+{
+    // 获取当前路径，文件前缀，采集数目
+    QString dirPath = QCoreApplication::applicationDirPath() + "/data";
+    QString prefix = ui->leFilePrefix->text();
+    qint32 collectNum = ui->leCollectNum->text().toInt();
+    qint32 timeInterval = ui->leTimeInterval->text().toInt();
+
+    bool flag = saveDataToFile(dirPath, prefix, collectNum, timeInterval);
+
+}
 
 // 打印信息到文本框中，其他函数调用的部分，以后可以换成其他函数
 void MainWindow::printInfo(QString infoStr)
 {
     ui->textBrowser->append(infoStr);
 }
+
+bool MainWindow::saveDataToFile(const QString &dirPath, const QString &prefix, const qint32 &collectNum, const qint32 &timeInterval)
+{
+    // 目录与文件前缀
+    QDir dir(dirPath);
+    QString filePrefix = dirPath + '/' + prefix;
+    QString fileType = ".txt";
+
+
+    // 检测目录是否存在
+    if(!dir.exists())
+    {
+        if(dir.mkpath(dirPath))
+        {
+            qDebug() << "Directory created successfully.";
+        }
+        else
+        {
+            qDebug() << "Failed to create directory.";
+        }
+    }
+
+    // 存储数据，生成指定数目的文件
+    for(int i = 0; i < collectNum; i++)
+    {
+        QString num = QString::asprintf("%0*d", 3, i);
+        QString fileName = filePrefix + num + fileType;
+
+        QFile file(fileName);
+
+        // 打开文件，覆盖模式
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qDebug() << "Failed to open file for writing.";
+        }
+
+        QTextStream out(&file);
+
+        ViReal32 dataArray[Server::DEVICE_MAX_POINT_NUM * 2];
+        ViInt32  dataNum = 0;                   // 实际采集点数
+
+        // 获取数据
+        m_server.queryCurTraceFmtData(dataArray, dataNum, DEVICE_TYPE::devicetype_analyzer);
+
+        // 存储数据
+        for(int j = 0; j < dataNum / 2; j++)
+        {
+            qDebug() << QString::number(dataNum);
+            QString str;
+            str.sprintf("%d:<%.3f,%.3f>", j / 2, dataArray[j * 2], dataArray[j * 2 + 1]);
+            out << str << '\n';
+            qDebug() << str;
+        }
+        qDebug() <<"\"" << fileName << "\"";
+        // 时间间隔
+        QThread::msleep(timeInterval);
+    }
+    return 1;
+}
+
+
+
+
+
 
 

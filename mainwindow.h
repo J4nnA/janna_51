@@ -4,6 +4,10 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QCoreApplication>
+#include <QFile>
+#include <QDir>
+#include <QTextStream>
 #include "Service.h"
 
 QT_BEGIN_NAMESPACE
@@ -33,9 +37,12 @@ private slots:
 
     void on_btnReadFormatData_clicked();
 
+    void on_btnTempTest_clicked();
+
 private:
     void printInfo(QString infoStr);
 
+    bool saveDataToFile(const QString& dirPath, const QString& pexfix, const qint32& collectNum, const qint32 &timeInterval);
 
 private:
     Ui::MainWindow *ui;
