@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
+#include <QVector>
 #include "Service.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,11 +40,15 @@ private slots:
 
     void on_btnTempTest_clicked();
 
+    void on_btnReadSpecFile_clicked();
+
 private:
     void printInfo(QString infoStr);
 
     bool saveDataToFile(const QString& dirPath, const QString& pexfix, const qint32& collectNum, const qint32 &timeInterval);
 
+    // 根据文件名，读取特定文件
+    QVector<QVector<double>> readFileByName(const QString& fileName);
 private:
     Ui::MainWindow *ui;
 

@@ -81,6 +81,14 @@ void MainWindow::on_btnQueryStopFreq_clicked()
 }
 
 
+void MainWindow::on_btnReadSpecFile_clicked()
+{
+    QString fileName = dirPath + "/" + ui->leFileName->text();
+    QVector<QVector<double>> data = readFileByName(fileName);
+
+
+}
+
 void MainWindow::on_btnReadFormatData_clicked()
 {
     // 提示信息
@@ -180,6 +188,42 @@ bool MainWindow::saveDataToFile(const QString &dirPath, const QString &prefix, c
     }
     return 1;
 }
+
+QVector<QVector<double> > MainWindow::readFileByName(const QString &filename)
+{
+    QFile file(filename);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open file:" << filename;
+        return {};
+    }
+
+    QTextStream in(&file);
+    QRegularExpression re("<(\\d+\\.?\\d*),(\\d+\\.?\\d*)>");
+
+    QVector<QVector<double>> data;
+
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QRegularExpressionMatch match = re.match(line);
+
+        if (match.hasMatch()) {
+            double x = match.captured(1).toDouble();
+            double y = match.captured(2).toDouble();
+
+            if (data.size() <= x) {
+                data.resize(x + 1);
+            }
+            data[x].append(y);
+        }
+    }
+
+    file.close();
+
+    return data;
+}
+
+
 
 
 
