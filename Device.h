@@ -18,6 +18,15 @@ enum class SCPI_DATA_FMT
 
 };
 
+enum class SCPI_MEAS_MODE
+{
+    s_measmode_CAT = 0,
+    s_measmode_SA,
+    s_measmode_VNA,
+    s_measmode_USBPM,
+    s_measmode_VVM
+};
+
 class Analyzer
 {
 public:
@@ -33,14 +42,22 @@ public:
     ViStatus queryStartFreq(ViReal64 &freq);
 
     // 设置终止频率
-    ViStatus setStopFreq(QString endFreqStr);
+    ViStatus setStopFreq(QString stopFreqStr);
 
     // 查询终止频率
     ViStatus queryStopFreq(ViReal64 &freq);
 
+    // 设置扫描点数
+    ViStatus setSweepPoint(QString sweepPoint);
+
+    // 查询扫描点数
+    ViStatus querySweepPoint(ViInt32& sweepPoint);
 
     // 查询格式化后的当前迹线的数据(返回数据和数据数目)
     ViStatus queryCurTraceFmtData(ViChar charDataArray[], ViInt32 &dataNum);
+
+    // 设置测量模式
+    ViStatus setMeasMode(SCPI_MEAS_MODE s_measmode);
 
 
 private:
@@ -48,6 +65,7 @@ private:
     ViStatus setQueryDataFmt(SCPI_DATA_FMT queryDataFmt);
 
     // 查询操作
+    ViStatus querySingleData(const QString &cmd, ViInt32 &longValue);
     ViStatus querySingleData(const QString &cmd, ViReal64 &doubleValue);     // 需要重载一堆函数
     ViStatus queryArrayData(const QString &cmd, ViChar charDataArray[], ViInt32& dataNum);
                                     // 目前只能实现ascii码的读取

@@ -47,6 +47,12 @@ private slots:
 
     void on_btnPlotGraph_clicked();
 
+    void on_btnVnaModeSwitch_clicked();
+
+    void on_btnSetSweepPoint_clicked();
+
+    void on_btnQuerySweepPoint_clicked();
+
 private:
     void printInfo(QString infoStr);
 

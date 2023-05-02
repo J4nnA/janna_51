@@ -120,6 +120,40 @@ ViStatus Analyzer::queryStopFreq(ViReal64 &retFreq)
     return status;
 }
 
+ViStatus Analyzer::setSweepPoint(QString sweepPoint)
+{
+    ViStatus status;
+
+    // 生成操作字符串
+    QString cmd = ":SENS:SWE:POIN " + sweepPoint;
+
+    // 发送指令
+    status = sendCmd(cmd);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "setSweepPoint error.";
+        return status;
+    }
+    return status;
+}
+
+ViStatus Analyzer::querySweepPoint(ViInt32 &sweepPoint)
+{
+    ViStatus status;
+
+    // 生成指令
+    QString cmd = ":SENS:SWE:POIN?";
+
+    // 查询数据
+    status = querySingleData(cmd, sweepPoint);
+    if(status != VI_SUCCESS)
+    {
+        qDebug() << "querySweepPoint error.";
+        return status;
+    }
+    return status;
+}
+
 
 ViStatus Analyzer::queryCurTraceFmtData(ViChar charDataArray[], ViInt32 &dataNum)
 {
@@ -131,6 +165,34 @@ ViStatus Analyzer::queryCurTraceFmtData(ViChar charDataArray[], ViInt32 &dataNum
 
     // 查询数组数据
     status = queryArrayData(cmd, charDataArray, dataNum);
+    return status;
+}
+
+ViStatus Analyzer::setMeasMode(SCPI_MEAS_MODE s_measmode)
+{
+    ViStatus status;
+
+    QString opStr = ":INSTrument:SELect ";
+    QString cmd;
+
+    switch(s_measmode)
+    {
+    case SCPI_MEAS_MODE::s_measmode_CAT:
+        break;
+    case SCPI_MEAS_MODE::s_measmode_SA:
+        break;
+    case SCPI_MEAS_MODE::s_measmode_VNA:
+        cmd = opStr + "VNA";
+        break;
+    case SCPI_MEAS_MODE::s_measmode_USBPM:
+        break;
+    case SCPI_MEAS_MODE::s_measmode_VVM:
+        break;
+    default:
+        break;
+    }
+
+    status = sendCmd(cmd);
     return status;
 }
 
@@ -158,6 +220,32 @@ ViStatus Analyzer::setQueryDataFmt(SCPI_DATA_FMT queryDataFmt)
 
     // 修改静态变量
     Analyzer::queryDataFmt = SCPI_DATA_FMT::s_datafmt_ASC;
+    return status;
+}
+
+ViStatus Analyzer::querySingleData(const QString &cmd, ViInt32 &longValue)
+{
+    ViStatus status;
+    ViUInt32 retCnt;
+    ViChar readBuff[BUFFER_SIZE];
+
+    // 发送指令
+    sendCmd(cmd);
+
+    // 接收数据并转化
+    QThread::msleep(50);
+    status = viRead(m_analyzerSession, (ViBuf)readBuff, BUFFER_SIZE, &retCnt);
+    // 根据查询返回数据类型进行对应转换操作
+    switch(Analyzer::queryDataFmt)
+    {
+    case SCPI_DATA_FMT::s_datafmt_HEX:
+        std::memcpy(&longValue, readBuff, sizeof(ViInt32));
+        break;
+    case SCPI_DATA_FMT::s_datafmt_ASC:
+        QString tempStr = readBuff;
+        longValue = tempStr.toInt();
+        break;
+    }
     return status;
 }
 

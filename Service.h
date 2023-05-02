@@ -32,8 +32,18 @@ public:
     // 查询终止频率
     QString queryStopFreq(M_DEVICE_TYPE deviceType);
 
+    // 设置扫描点数
+    qint32 setSweepPoint(qint32 sweepPoint, M_DEVICE_TYPE deviceType);
+
+    // 查询扫描点数
+    QString querySweepPoint(M_DEVICE_TYPE deviceType);
+
     // 查询当前迹线格式化数据
     qint32 queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, M_DEVICE_TYPE deviceType);
+
+    // 设置测试模式
+    qint32 setMeasMode(SCPI_MEAS_MODE s_measmode, M_DEVICE_TYPE deviceType);
+
 
 public:
     const static qint32 DEVICE_MAX_POINT_NUM = 1600;          // 所有设备一次所能获得的最大数据个数

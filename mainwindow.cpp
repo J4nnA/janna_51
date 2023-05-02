@@ -266,15 +266,29 @@ QVector<QVector<double>> MainWindow::readFilesSameDir(const QString dirctoryPath
 
 
 
+void MainWindow::on_btnVnaModeSwitch_clicked()
+{
+    qint32 flag = m_server.setMeasMode(SCPI_MEAS_MODE::s_measmode_VNA, M_DEVICE_TYPE::devicetype_analyzer);
+    printInfo(QString::number(flag));
+}
 
 
+void MainWindow::on_btnSetSweepPoint_clicked()
+{
+    qint32 value = ui->leSweepPoint->text().toInt();
+
+    qint32 flag = m_server.setSweepPoint(value, M_DEVICE_TYPE::devicetype_analyzer);
+
+    printInfo(QString::number(flag));
+}
 
 
+void MainWindow::on_btnQuerySweepPoint_clicked()
+{
+    QString infoStr;
 
+    infoStr = m_server.querySweepPoint(M_DEVICE_TYPE::devicetype_analyzer);
 
-
-
-
-
-
+    printInfo(infoStr);
+}
 

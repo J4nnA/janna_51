@@ -109,6 +109,42 @@ QString Server::queryStopFreq(M_DEVICE_TYPE deviceType)
     return stopFreqStr;
 }
 
+qint32 Server::setSweepPoint(qint32 sweepPoint, M_DEVICE_TYPE deviceType)
+{
+    qDebug() << "Server::setSweepPoint";
+    qint32 flag;
+
+    switch(deviceType)
+    {
+    case M_DEVICE_TYPE::devicetype_analyzer:
+
+        QString sweepPointStr = QString::number(sweepPoint);
+        flag = m_analyzer.setSweepPoint(sweepPointStr);
+    }
+
+    return flag;
+}
+
+QString Server::querySweepPoint(M_DEVICE_TYPE deviceType)
+{
+    qDebug() << "Server::querySweepPoint";
+
+    qint32 flag;
+    QString sweepPointStr;
+    ViInt32 sweepPoint;
+
+    // 转换数据类型
+    switch(deviceType)
+    {
+    case M_DEVICE_TYPE::devicetype_analyzer:
+
+        flag = m_analyzer.querySweepPoint(sweepPoint);
+        sweepPointStr.sprintf("%l", sweepPoint);                // 不确定数据格式是否正确
+        break;
+    }
+    return sweepPointStr;
+}
+
 qint32 Server::queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, M_DEVICE_TYPE deviceType)
 {
     qDebug() << "Server::queryCurTraceFmtData";
@@ -134,3 +170,22 @@ qint32 Server::queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, M_DE
 
     return flag;
 }
+
+qint32 Server::setMeasMode(SCPI_MEAS_MODE s_measmode, M_DEVICE_TYPE deviceType)
+{
+    qDebug() << "Server::setMeasMode";
+    qint32 flag;
+
+    switch(deviceType)
+    {
+    case M_DEVICE_TYPE::devicetype_analyzer:
+
+        flag = m_analyzer.setMeasMode(s_measmode);
+        break;
+
+    }
+
+    return flag;
+}
+
+
