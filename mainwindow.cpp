@@ -120,6 +120,12 @@ void MainWindow::on_btnTempTest_clicked()
     qint32 collectNum = ui->leCollectNum->text().toInt();
     qint32 timeInterval = ui->leTimeInterval->text().toInt();
 
+    // 启动转台
+    m_serialPort.start();
+
+    // 等待16.4s开始采集
+
+    QThread::msleep(16400);
     bool flag = saveDataToFile(dirPath, prefix, collectNum, timeInterval);
 
 }

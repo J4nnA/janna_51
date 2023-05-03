@@ -11,6 +11,7 @@
 #include <QVector>
 #include "Service.h"
 #include "plotwindow.h"
+#include "serialport.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -67,6 +68,8 @@ private:
     Ui::MainWindow *ui;
 
     Server m_server;                // 下层服务
+
+    SerialPort m_serialPort;
 
     QString dirPath;                // 数据存放格式
 };
