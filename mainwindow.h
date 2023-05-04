@@ -54,6 +54,8 @@ private slots:
 
     void on_btnQuerySweepPoint_clicked();
 
+    void on_btnComTest_clicked();
+
 private:
     void printInfo(QString infoStr);
 

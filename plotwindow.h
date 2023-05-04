@@ -17,7 +17,7 @@ public:
     explicit PlotWindow(QWidget *parent = nullptr);
     ~PlotWindow();
     // 画图
-    void plotGraph(QVector<QVector<double>>dataArray);
+    void plotGraph(const QVector<QVector<double>>dataArray);
 
 private:
     Ui::PlotWindow *ui;

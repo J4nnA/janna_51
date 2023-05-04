@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>699</width>
+    <width>751</width>
     <height>749</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>30</x>
       <y>70</y>
-      <width>631</width>
+      <width>671</width>
       <height>71</height>
      </rect>
     </property>
@@ -43,9 +43,9 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>0</y>
-      <width>631</width>
+      <width>681</width>
       <height>71</height>
      </rect>
     </property>
@@ -120,7 +120,7 @@
      <rect>
       <x>30</x>
       <y>140</y>
-      <width>631</width>
+      <width>671</width>
       <height>111</height>
      </rect>
     </property>
@@ -343,7 +343,7 @@
      <rect>
       <x>30</x>
       <y>280</y>
-      <width>631</width>
+      <width>671</width>
       <height>111</height>
      </rect>
     </property>
@@ -355,7 +355,7 @@
       <rect>
        <x>20</x>
        <y>70</y>
-       <width>92</width>
+       <width>131</width>
        <height>29</height>
       </rect>
      </property>
@@ -366,9 +366,9 @@
     <widget class="QFrame" name="frame">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>160</x>
        <y>30</y>
-       <width>491</width>
+       <width>501</width>
        <height>71</height>
       </rect>
      </property>
@@ -381,9 +381,9 @@
      <widget class="QPushButton" name="btnTempTest">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>40</x>
         <y>40</y>
-        <width>81</width>
+        <width>141</width>
         <height>20</height>
        </rect>
       </property>
@@ -394,22 +394,22 @@
      <widget class="QLineEdit" name="leCollectNum">
       <property name="geometry">
        <rect>
-        <x>410</x>
+        <x>430</x>
         <y>10</y>
         <width>41</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>60</string>
+       <string>240</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_13">
       <property name="geometry">
        <rect>
-        <x>340</x>
+        <x>350</x>
         <y>10</y>
-        <width>51</width>
+        <width>91</width>
         <height>20</height>
        </rect>
       </property>
@@ -420,7 +420,7 @@
      <widget class="QLineEdit" name="leTimeInterval">
       <property name="geometry">
        <rect>
-        <x>260</x>
+        <x>300</x>
         <y>10</y>
         <width>41</width>
         <height>21</height>
@@ -433,9 +433,9 @@
      <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>220</x>
         <y>10</y>
-        <width>51</width>
+        <width>81</width>
         <height>20</height>
        </rect>
       </property>
@@ -446,9 +446,9 @@
      <widget class="QLineEdit" name="leFilePrefix">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>90</x>
         <y>10</y>
-        <width>81</width>
+        <width>111</width>
         <height>21</height>
        </rect>
       </property>
@@ -461,12 +461,25 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>51</width>
+        <width>71</width>
         <height>20</height>
        </rect>
       </property>
       <property name="text">
        <string>文件前缀</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnComTest">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>40</y>
+        <width>92</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>comTest</string>
       </property>
      </widget>
     </widget>
@@ -476,7 +489,7 @@
      <rect>
       <x>40</x>
       <y>390</y>
-      <width>621</width>
+      <width>661</width>
       <height>101</height>
      </rect>
     </property>
@@ -488,7 +501,7 @@
       <rect>
        <x>10</x>
        <y>60</y>
-       <width>141</width>
+       <width>191</width>
        <height>29</height>
       </rect>
      </property>
@@ -499,9 +512,9 @@
     <widget class="QPushButton" name="btnQueryDefaultPath">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>210</x>
        <y>60</y>
-       <width>131</width>
+       <width>201</width>
        <height>29</height>
       </rect>
      </property>
@@ -514,7 +527,7 @@
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>281</width>
+       <width>361</width>
        <height>27</height>
       </rect>
      </property>
@@ -527,7 +540,7 @@
       <rect>
        <x>450</x>
        <y>30</y>
-       <width>161</width>
+       <width>191</width>
        <height>29</height>
       </rect>
      </property>
@@ -540,7 +553,7 @@
       <rect>
        <x>450</x>
        <y>60</y>
-       <width>161</width>
+       <width>191</width>
        <height>29</height>
       </rect>
      </property>
@@ -555,8 +568,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>699</width>
-     <height>21</height>
+     <width>751</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

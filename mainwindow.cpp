@@ -298,3 +298,9 @@ void MainWindow::on_btnQuerySweepPoint_clicked()
     printInfo(infoStr);
 }
 
+
+void MainWindow::on_btnComTest_clicked()
+{
+
+}
+

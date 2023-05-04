@@ -13,9 +13,11 @@ PlotWindow::~PlotWindow()
     delete ui;
 }
 
-void PlotWindow::plotGraph(QVector<QVector<double> > dataArray)
+void PlotWindow::plotGraph(const QVector<QVector<double> > dataArray)
 {
     qDebug() << "build";
+    qDebug() << dataArray.size();
+    qDebug() << dataArray[0].size();
 
     int numCurves = dataArray[0].size();
 
@@ -40,6 +42,7 @@ void PlotWindow::plotGraph(QVector<QVector<double> > dataArray)
         }
 
         // 调整Y轴范围以适应数据
-        ui->customPlot->rescaleAxes();
-        ui->customPlot->replot();
+        ui->customPlot->yAxis->setRange(-100,0);
+        //ui->customPlot->rescaleAxes();
+        //ui->customPlot->replot();
 }
