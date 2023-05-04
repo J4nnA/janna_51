@@ -84,6 +84,7 @@ void MainWindow::on_btnQueryStopFreq_clicked()
 void MainWindow::on_btnReadSpecFile_clicked()
 {
     QString fileName = dirPath + "/" + ui->leFileName->text();
+    qDebug() << "FileName: " << fileName;
     QVector<double> data = readFileByName(fileName);
 
 }
@@ -230,10 +231,10 @@ QVector<double>  MainWindow::readFileByName(const QString &filename)
     }
 
     QTextStream in(&file);
-    QRegularExpression re("<(\\d+\\.?\\d*),(\\d+\\.?\\d*)>");
-
+    QRegularExpression re("<(-?\\d+\\.?\\d*),(-?\\d+\\.?\\d*)>");
+    //   < ( d + . d*),(d + . d*) >
     QVector<double> data;
-
+        qDebug() << "before: " << data.size();
     while (!in.atEnd()) {
         QString line = in.readLine();
         QRegularExpressionMatch match = re.match(line);
@@ -245,7 +246,8 @@ QVector<double>  MainWindow::readFileByName(const QString &filename)
             data.append(y);
         }
     }
-
+    //qDebug() <<
+    qDebug() << "after: " << data.size();
     file.close();
 
     return data;

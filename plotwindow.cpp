@@ -42,7 +42,7 @@ void PlotWindow::plotGraph(const QVector<QVector<double> > dataArray)
         }
 
         // 调整Y轴范围以适应数据
-        ui->customPlot->yAxis->setRange(-100,0);
-        //ui->customPlot->rescaleAxes();
-        //ui->customPlot->replot();
+        //ui->customPlot->yAxis->setRange(-100,0);
+        ui->customPlot->rescaleAxes();
+        ui->customPlot->replot();
 }
