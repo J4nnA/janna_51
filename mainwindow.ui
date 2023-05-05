@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>751</width>
+    <width>486</width>
     <height>749</height>
    </rect>
   </property>
@@ -14,562 +14,605 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGroupBox" name="groupBox_3">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>70</y>
-      <width>671</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>测量模式切换</string>
-    </property>
-    <widget class="QPushButton" name="btnVnaModeSwitch">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>30</y>
-       <width>92</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>VNA</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>0</y>
-      <width>681</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>连接设备</string>
-    </property>
-    <widget class="QLineEdit" name="leDeviceIp">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>30</y>
-       <width>271</width>
-       <height>27</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>169.254.227.100</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnConnect">
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>30</y>
-       <width>92</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>连接</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>30</y>
-       <width>69</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>设备ip</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>490</y>
-      <width>631</width>
-      <height>221</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>返回信息</string>
-    </property>
-    <widget class="QTextBrowser" name="textBrowser">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>611</width>
-       <height>181</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_4">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>140</y>
-      <width>671</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>基本参数设置</string>
-    </property>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>69</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>起始频率</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>69</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>终止频率</string>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="cbStartFreqUnit">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>20</y>
-       <width>89</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <item>
-      <property name="text">
-       <string>Hz</string>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>3</horstretch>
+        <verstretch>1</verstretch>
+       </sizepolicy>
       </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>kHz</string>
+      <property name="title">
+       <string>连接设备</string>
       </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>GHz</string>
-      </property>
-     </item>
-    </widget>
-    <widget class="QPushButton" name="btnSetStartFreq">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>20</y>
-       <width>92</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>设置</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnQueryStopFreq">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>50</y>
-       <width>92</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>查询</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnQueryStartFreq">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>20</y>
-       <width>92</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>查询</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnSetStopFreq">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>50</y>
-       <width>92</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>设置</string>
-     </property>
-    </widget>
-    <widget class="QDoubleSpinBox" name="dsbStartFreq">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>20</y>
-       <width>81</width>
-       <height>28</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QDoubleSpinBox" name="dsbStopFreq">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>50</y>
-       <width>81</width>
-       <height>28</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="cbStopFreqUnit">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>50</y>
-       <width>89</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <item>
-      <property name="text">
-       <string>Hz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>kHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>GHz</string>
-      </property>
-     </item>
-    </widget>
-    <widget class="QPushButton" name="btnSetSweepPoint">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>80</y>
-       <width>92</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>设置</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnQuerySweepPoint">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>80</y>
-       <width>92</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>查询</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>69</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>扫描点数</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="leSweepPoint">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>80</y>
-       <width>101</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>1000</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_5">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>280</y>
-      <width>671</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>迹线读取</string>
-    </property>
-    <widget class="QPushButton" name="btnReadFormatData">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>70</y>
-       <width>131</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>读取格式化数据</string>
-     </property>
-    </widget>
-    <widget class="QFrame" name="frame">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>30</y>
-       <width>501</width>
-       <height>71</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <widget class="QPushButton" name="btnTempTest">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>40</y>
-        <width>141</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>btnTempTest</string>
-      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>设备ip</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="leDeviceIp">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>169.254.227.100</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>15</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnConnect">
+         <property name="text">
+          <string>连接</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </widget>
-     <widget class="QLineEdit" name="leCollectNum">
-      <property name="geometry">
-       <rect>
-        <x>430</x>
-        <y>10</y>
-        <width>41</width>
-        <height>21</height>
-       </rect>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>1</verstretch>
+       </sizepolicy>
       </property>
-      <property name="text">
-       <string>240</string>
+      <property name="title">
+       <string>测量模式切换</string>
       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="btnVnaModeSwitch">
+         <property name="text">
+          <string>VNA</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>346</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </widget>
-     <widget class="QLabel" name="label_13">
-      <property name="geometry">
-       <rect>
-        <x>350</x>
-        <y>10</y>
-        <width>91</width>
-        <height>20</height>
-       </rect>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>4</verstretch>
+       </sizepolicy>
       </property>
-      <property name="text">
-       <string>采集数目</string>
+      <property name="title">
+       <string>基本参数设置</string>
       </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>起始频率</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="dsbStartFreq">
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QComboBox" name="cbStartFreqUnit">
+         <property name="minimumSize">
+          <size>
+           <width>70</width>
+           <height>0</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Hz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>kHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GHz</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <spacer name="horizontalSpacer_10">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="btnSetStartFreq">
+         <property name="text">
+          <string>设置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QPushButton" name="btnQueryStartFreq">
+         <property name="text">
+          <string>查询</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>终止频率</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="dsbStopFreq"/>
+       </item>
+       <item row="1" column="2">
+        <widget class="QComboBox" name="cbStopFreqUnit">
+         <property name="minimumSize">
+          <size>
+           <width>70</width>
+           <height>0</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Hz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>kHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MHz</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GHz</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QPushButton" name="btnSetStopFreq">
+         <property name="text">
+          <string>设置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QPushButton" name="btnQueryStopFreq">
+         <property name="text">
+          <string>查询</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>扫描点数</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="leSweepPoint">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>15</string>
+         </property>
+         <property name="maxLength">
+          <number>200</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QPushButton" name="btnSetSweepPoint">
+         <property name="text">
+          <string>设置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="5">
+        <widget class="QPushButton" name="btnQuerySweepPoint">
+         <property name="text">
+          <string>查询</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QLineEdit" name="leTimeInterval">
-      <property name="geometry">
-       <rect>
-        <x>300</x>
-        <y>10</y>
-        <width>41</width>
-        <height>21</height>
-       </rect>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>4</verstretch>
+       </sizepolicy>
       </property>
-      <property name="text">
-       <string>550</string>
+      <property name="title">
+       <string>迹线读取</string>
       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QFrame" name="frame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>3</horstretch>
+           <verstretch>4</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="leftMargin">
+           <number>7</number>
+          </property>
+          <property name="topMargin">
+           <number>7</number>
+          </property>
+          <property name="rightMargin">
+           <number>7</number>
+          </property>
+          <property name="bottomMargin">
+           <number>7</number>
+          </property>
+          <item row="2" column="5">
+           <widget class="QPushButton" name="btnComTest">
+            <property name="text">
+             <string>comTest</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3" colspan="2">
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>采集数目</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>文件前缀</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3" colspan="2">
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="5">
+           <widget class="QPushButton" name="btnTempTest">
+            <property name="text">
+             <string>btnTempTest</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>时间间隔</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="leTimeInterval">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>550</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="leCollectNum">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>10</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>240</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" colspan="4">
+           <widget class="QLineEdit" name="leFilePrefix">
+            <property name="text">
+             <string>test_data_</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnReadFormatData">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>1</horstretch>
+           <verstretch>1</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>读取格式化数据</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QLabel" name="label_10">
-      <property name="geometry">
-       <rect>
-        <x>220</x>
-        <y>10</y>
-        <width>81</width>
-        <height>20</height>
-       </rect>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_6">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>3</verstretch>
+       </sizepolicy>
       </property>
-      <property name="text">
-       <string>时间间隔</string>
+      <property name="title">
+       <string>图像绘制</string>
       </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0" rowspan="2">
+        <widget class="QWidget" name="widget" native="true">
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="1" column="0">
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="btnReadSpecFile">
+            <property name="text">
+             <string>读取特定文件，转成数组</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QLineEdit" name="leFileName">
+            <property name="text">
+             <string>test_data_000.txt</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="btnReadAllFile">
+         <property name="text">
+          <string>读取全部文件，转数组</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="btnPlotGraph">
+         <property name="text">
+          <string>读取全部文件，绘制图像</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QLineEdit" name="leFilePrefix">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>10</y>
-        <width>111</width>
-        <height>21</height>
-       </rect>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>6</verstretch>
+       </sizepolicy>
       </property>
-      <property name="text">
-       <string>test_data_</string>
+      <property name="title">
+       <string>返回信息</string>
       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QTextBrowser" name="textBrowser"/>
+       </item>
+      </layout>
      </widget>
-     <widget class="QLabel" name="label_12">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>71</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>文件前缀</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnComTest">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>40</y>
-        <width>92</width>
-        <height>29</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>comTest</string>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_6">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>390</y>
-      <width>661</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>图像绘制</string>
-    </property>
-    <widget class="QPushButton" name="btnReadSpecFile">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>191</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>读取特定文件，转成数组</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnQueryDefaultPath">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>60</y>
-       <width>201</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>查询默认数据文件路径</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="leFileName">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>361</width>
-       <height>27</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>test_data_000.txt</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnReadAllFile">
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>30</y>
-       <width>191</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>读取全部文件，转数组</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnPlotGraph">
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>60</y>
-       <width>191</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>读取全部文件，绘制图像</string>
-     </property>
-    </widget>
-   </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>751</width>
-     <height>25</height>
+     <width>486</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
