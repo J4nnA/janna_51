@@ -1,5 +1,8 @@
 ﻿#include "myserialport.h"
 
+// 声明静态变量
+QString MySerialPort::dataBuffer;
+
 MySerialPort::MySerialPort(QObject *parent)
     : QObject{parent}
 {
@@ -46,8 +49,16 @@ void MySerialPort::reciveData()
 {
     // 接收数据
     QByteArray data = m_serialPort.readAll();
-    int dataRet = QString(data).toInt();
+    dataBuffer.append(data);
 
-    // 发射信号
-    emit retData(dataRet);
+    // 检查是否有换行符，如果有，则处理数据并清空缓冲区
+    int newLineIndex = dataBuffer.indexOf('\n');
+    if (newLineIndex != -1) {
+        int dataRet = dataBuffer.left(newLineIndex).toInt();
+        dataBuffer.remove(0, newLineIndex + 1);
+
+        // 发射信号
+        emit retData(dataRet);
+    }
 }
+

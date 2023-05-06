@@ -26,7 +26,9 @@ private slots:
     void reciveData();
 
 private:
+    static QString dataBuffer;
     QSerialPort m_serialPort;
+
 };
 
 #endif // MYSERIALPORT_H
