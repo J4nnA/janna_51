@@ -15,6 +15,8 @@ SOURCES += \
     Service.cpp \
     main.cpp \
     mainwindow.cpp \
+    myserialport.cpp \
+    newserialport.cpp \
     plotwindow.cpp \
     qcustomplot.cpp \
     serialport.cpp
@@ -23,6 +25,8 @@ HEADERS += \
     Device.h \
     Service.h \
     mainwindow.h \
+    myserialport.h \
+    newserialport.h \
     plotwindow.h \
     qcustomplot.h \
     serialport.h

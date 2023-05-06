@@ -12,6 +12,8 @@
 #include "Service.h"
 #include "plotwindow.h"
 #include "serialport.h"
+#include "newserialport.h"
+#include "myserialport.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -56,22 +58,31 @@ private slots:
 
     void on_btnComTest_clicked();
 
+    void on_btnSendSpecialNumber_clicked();
+
 private:
     void printInfo(QString infoStr);
 
     bool saveDataToFile(const QString& dirPath, const QString& pexfix, const qint32& collectNum, const qint32 &timeInterval);
-
+private slots:
+    void print_temp(qint32 data);
     // 根据文件名，读取特定文件
    QVector<double> readFileByName(const QString& fileName);
 
    // 读取同一路径下的所有文件的内容
    QVector<QVector<double>> readFilesSameDir(const QString dirctoryPath);
+   void on_btnSendNumber_clicked();
+
+   void on_btnConnectSerialPort_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     Server m_server;                // 下层服务
 
-    SerialPort m_serialPort;
+    NewSerialPort m_newSerialPort;
+
+    MySerialPort m_serialPort;
 
     QString dirPath;                // 数据存放格式
 };

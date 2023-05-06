@@ -1,4 +1,5 @@
-﻿
+﻿// 因更换serialPort对象，故转台控制功能暂时失效，记得使用该功能前进行对象替换
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -122,7 +123,7 @@ void MainWindow::on_btnTempTest_clicked()
     qint32 timeInterval = ui->leTimeInterval->text().toInt();
 
     // 启动转台
-    m_serialPort.start();
+    //m_serialPort.start();
 
     // 等待16.4s开始采集
 
@@ -221,6 +222,11 @@ bool MainWindow::saveDataToFile(const QString &dirPath, const QString &prefix, c
     return 1;
 }
 
+void MainWindow::print_temp(qint32 data)
+{
+    printInfo(QString::number(data));
+}
+
 QVector<double>  MainWindow::readFileByName(const QString &filename)
 {
     QFile file(filename);
@@ -304,5 +310,36 @@ void MainWindow::on_btnQuerySweepPoint_clicked()
 void MainWindow::on_btnComTest_clicked()
 {
 
+}
+
+
+void MainWindow::on_btnSendSpecialNumber_clicked()
+{
+    connect(&m_newSerialPort, SIGNAL(newRetData(qint32)), this, SLOT(print_temp(qint32)));
+
+    m_newSerialPort.sendAndRevice(1515);
+}
+
+
+void MainWindow::on_btnSendNumber_clicked()
+{
+    // 等待接收返回数据并打印
+    connect(&m_serialPort, &MySerialPort::retData, this, [=](qint32 data){
+        printInfo(QString::number(data));
+    });
+
+    // 获取发送数字
+    qint32 number = ui->leSendNumber->text().toInt();
+
+    // 发送数字
+    m_serialPort.sendRandomNum(number);
+}
+
+
+void MainWindow::on_btnConnectSerialPort_clicked()
+{
+    bool flag = m_serialPort.connectSerialPort();
+
+    printInfo(QString::number(flag));
 }
 
