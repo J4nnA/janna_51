@@ -11,6 +11,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     dirPath = QCoreApplication::applicationDirPath() + "/data";
+
+    // 等待接收返回数据并打印
+    connect(&m_serialPort, &MySerialPort::retData, this, [=](qint32 data){
+        printInfo(QString::number(data));
+    });
+
 }
 
 MainWindow::~MainWindow()
@@ -323,10 +329,6 @@ void MainWindow::on_btnSendSpecialNumber_clicked()
 
 void MainWindow::on_btnSendNumber_clicked()
 {
-    // 等待接收返回数据并打印
-    connect(&m_serialPort, &MySerialPort::retData, this, [=](qint32 data){
-        printInfo(QString::number(data));
-    });
 
     // 获取发送数字
     qint32 number = ui->leSendNumber->text().toInt();
