@@ -145,7 +145,7 @@ QString Server::querySweepPoint(M_DEVICE_TYPE deviceType)
     return sweepPointStr;
 }
 
-qint32 Server::queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, M_DEVICE_TYPE deviceType)
+qint32 Server::queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, M_DEVICE_TYPE deviceType)const
 {
     qDebug() << "Server::queryCurTraceFmtData";
     qint32 flag;

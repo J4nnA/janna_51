@@ -54,7 +54,7 @@ public:
     ViStatus querySweepPoint(ViInt32& sweepPoint);
 
     // 查询格式化后的当前迹线的数据(返回数据和数据数目)
-    ViStatus queryCurTraceFmtData(ViChar charDataArray[], ViInt32 &dataNum);
+    ViStatus queryCurTraceFmtData(ViChar charDataArray[], ViInt32 &dataNum)const;
 
     // 设置测量模式
     ViStatus setMeasMode(SCPI_MEAS_MODE s_measmode);
@@ -67,10 +67,10 @@ private:
     // 查询操作
     ViStatus querySingleData(const QString &cmd, ViInt32 &longValue);
     ViStatus querySingleData(const QString &cmd, ViReal64 &doubleValue);     // 需要重载一堆函数
-    ViStatus queryArrayData(const QString &cmd, ViChar charDataArray[], ViInt32& dataNum);
+    ViStatus queryArrayData(const QString &cmd, ViChar charDataArray[], ViInt32& dataNum)const;
                                     // 目前只能实现ascii码的读取
     // 发送指令
-    ViStatus sendCmd(const QString &cmd);
+    ViStatus sendCmd(const QString &cmd)const;
 
 
 public:

@@ -39,7 +39,9 @@ public:
     QString querySweepPoint(M_DEVICE_TYPE deviceType);
 
     // 查询当前迹线格式化数据
-    qint32 queryCurTraceFmtData(ViReal32 dataArray[], ViInt32 &dataNum, M_DEVICE_TYPE deviceType);
+    qint32 queryCurTraceFmtData(ViReal32 dataArray[],
+                                ViInt32 &dataNum,
+                                M_DEVICE_TYPE deviceType)const;
 
     // 设置测试模式
     qint32 setMeasMode(SCPI_MEAS_MODE s_measmode, M_DEVICE_TYPE deviceType);

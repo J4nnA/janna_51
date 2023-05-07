@@ -155,7 +155,7 @@ ViStatus Analyzer::querySweepPoint(ViInt32 &sweepPoint)
 }
 
 
-ViStatus Analyzer::queryCurTraceFmtData(ViChar charDataArray[], ViInt32 &dataNum)
+ViStatus Analyzer::queryCurTraceFmtData(ViChar charDataArray[], ViInt32 &dataNum)const
 {
     qDebug() << "queryCurTraceFmtData";
     ViStatus status;
@@ -277,7 +277,7 @@ ViStatus Analyzer::querySingleData(const QString& cmd, ViReal64 &doubleValue)
 }
 
 
-ViStatus Analyzer::queryArrayData(const QString &cmd, ViChar charDataArray[], ViInt32 &dataNum)
+ViStatus Analyzer::queryArrayData(const QString &cmd, ViChar charDataArray[], ViInt32 &dataNum)const
 {
     // 提示信息
     qDebug() << "Analyzer::queryArrayData";
@@ -319,7 +319,7 @@ ViStatus Analyzer::queryArrayData(const QString &cmd, ViChar charDataArray[], Vi
 
 
 
-ViStatus Analyzer::sendCmd(const QString& cmd)
+ViStatus Analyzer::sendCmd(const QString& cmd)const
 {
     ViStatus status;
     ViUInt32 retCnt;

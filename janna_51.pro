@@ -13,6 +13,7 @@ CONFIG += c++17
 SOURCES += \
     Device.cpp \
     Service.cpp \
+    ThreadedTasks.cpp \
     main.cpp \
     mainwindow.cpp \
     myserialport.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 HEADERS += \
     Device.h \
     Service.h \
+    ThreadedTasks.h \
     mainwindow.h \
     myserialport.h \
     newserialport.h \

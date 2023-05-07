@@ -132,10 +132,15 @@ void MainWindow::on_btnTempTest_clicked()
     //m_serialPort.start();
 
     // 等待16.4s开始采集
+    //
+    //QThread::msleep(16400);
+    //bool flag = saveDataToFile(dirPath, prefix, collectNum, timeInterval);
 
-    QThread::msleep(16400);
-    bool flag = saveDataToFile(dirPath, prefix, collectNum, timeInterval);
-
+    // 使用多线程来调用该功能
+    // 任务实例化
+    DataCollector * dataCollector = new DataCollector(*this, dirPath, prefix, collectNum, timeInterval);
+    // 启动
+    QThreadPool::globalInstance()->start(dataCollector);
 }
 
 void MainWindow::on_btnReadAllFile_clicked()
@@ -170,7 +175,7 @@ void MainWindow::printInfo(QString infoStr)
     ui->textBrowser->append(infoStr);
 }
 
-bool MainWindow::saveDataToFile(const QString &dirPath, const QString &prefix, const qint32 &collectNum, const qint32 &timeInterval)
+bool MainWindow::saveDataToFile(const QString &dirPath, const QString &prefix, const qint32 &collectNum, const qint32 &timeInterval)const
 {
     // 目录与文件前缀
     QDir dir(dirPath);
@@ -194,14 +199,16 @@ bool MainWindow::saveDataToFile(const QString &dirPath, const QString &prefix, c
     // 存储数据，生成指定数目的文件
     for(int i = 0; i < collectNum; i++)
     {
-        QString num = QString::asprintf("%0*d", 3, i);
+        //QString num = QString::asprintf("%0*d", 3, i);
+        QString num;
+        num.sprintf("%0*d", 3, i);
         QString fileName = filePrefix + num + fileType;
 
         QFile file(fileName);
 
         // 打开文件，覆盖模式
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            qDebug() << "Failed to open file for writing.";
+            //qDebug() << "Failed to open file for writing.";
         }
 
         QTextStream out(&file);
@@ -215,16 +222,17 @@ bool MainWindow::saveDataToFile(const QString &dirPath, const QString &prefix, c
         // 存储数据
         for(int j = 0; j < dataNum / 2; j++)
         {
-            qDebug() << QString::number(dataNum);
+            //qDebug() << QString::number(dataNum);
             QString str;
             str.sprintf("%d:<%.3f,%.3f>", j / 2, dataArray[j * 2], dataArray[j * 2 + 1]);
             out << str << '\n';
-            qDebug() << str;
+            //qDebug() << str;
         }
-        qDebug() <<"\"" << fileName << "\"";
+        //qDebug() <<"\"" << fileName << "\"";
         // 时间间隔
         QThread::msleep(timeInterval);
     }
+
     return 1;
 }
 

@@ -9,11 +9,13 @@
 #include <QDir>
 #include <QTextStream>
 #include <QVector>
+#include <QThreadPool>
 #include "Service.h"
 #include "plotwindow.h"
 #include "serialport.h"
 #include "newserialport.h"
 #include "myserialport.h"
+#include "ThreadedTasks.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,6 +30,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+     bool saveDataToFile(const QString& dirPath, const QString& pexfix, const qint32& collectNum, const qint32 &timeInterval)const;
 
 private slots:
     void on_btnConnect_clicked();
@@ -63,7 +66,7 @@ private slots:
 private:
     void printInfo(QString infoStr);
 
-    bool saveDataToFile(const QString& dirPath, const QString& pexfix, const qint32& collectNum, const qint32 &timeInterval);
+
 private slots:
     void print_temp(qint32 data);
     // 根据文件名，读取特定文件
