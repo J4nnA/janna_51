@@ -26,6 +26,7 @@ HEADERS += \
     Device.h \
     Service.h \
     ThreadedTasks.h \
+    common.h \
     mainwindow.h \
     myserialport.h \
     newserialport.h \
