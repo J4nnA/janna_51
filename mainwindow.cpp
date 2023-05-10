@@ -353,3 +353,9 @@ void MainWindow::on_btnConnectSerialPort_clicked()
     printInfo(QString::number(flag));
 }
 
+
+void MainWindow::on_btnStrQuery_clicked()
+{
+    m_serialPort.queryMaxAngleVolecity();
+}
+

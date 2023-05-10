@@ -78,6 +78,8 @@ private slots:
 
    void on_btnConnectSerialPort_clicked();
 
+   void on_btnStrQuery_clicked();
+
 private:
     Ui::MainWindow *ui;
 

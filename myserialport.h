@@ -7,12 +7,29 @@
 #include <QDebug>
 #include <stdlib.h>
 #include <iostream>
+#include "common.h"
 
+#define STEPS_PER_REV 66000
 
 // 对于上位机，控制速度是根据角度来的，即时间和角度的关系
 // 对于下位机，控制速度则是根据脉冲的频率
 // 需要弄一个转换器
 // 可以学会float和int的转换————对于实际工程项目
+
+// 角度每秒换算成脉冲时延
+class Converter : public QObject
+{
+    Q_OBJECT
+public:
+    explicit Converter(QObject *parent = nullptr);
+    // 角速度变脉冲
+    int angleToDelay(const float angleVolecity, const long stepsPerRev);
+
+    // 脉冲变角速度
+    float delayToAngle(const int delay, const long stepsPerRev);
+
+};
+
 
 class MySerialPort : public QObject
 {
@@ -45,22 +62,17 @@ signals:
 private slots:
     // 接收数据，并发射信号retData
     void reciveData();
+private:
+    void sendCmd();
 
 private:
     static QString dataBuffer;
     QSerialPort m_serialPort;
+    Converter m_converter;
 
 };
 
 
-// 角度每秒换算成脉冲时延
-class Converter
-{
-    // 角速度变脉冲
-    int angleToDelay(const float angleVolecity, const long stepsPerRev);
 
-    // 脉冲变角速度
-    float delayToAngle(const int delay, const long stepsPerRev);
-};
 
 #endif // MYSERIALPORT_H

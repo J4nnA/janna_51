@@ -69,7 +69,7 @@ void SerialPort::sendNum()
 void SerialPort::readData()
 {
     QByteArray data = m_serialPort.readAll();
-    qDebug() << "recive" << data;
+    qDebug() << "recive:" << data;
 }
 
 /*
