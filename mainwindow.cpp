@@ -184,7 +184,10 @@ void MainWindow::printInfo(QString infoStr)
     ui->textBrowser->append(infoStr);
 }
 
-bool MainWindow::saveDataToFile(const QString &dirPath, const QString &prefix, const qint32 &collectNum, const qint32 &timeInterval)const
+bool MainWindow::saveDataToFile(const QString &dirPath,
+                                const QString &prefix,
+                                const qint32 &collectNum,
+                                const qint32 &timeInterval)const
 {
     // 目录与文件前缀
     QDir dir(dirPath);
