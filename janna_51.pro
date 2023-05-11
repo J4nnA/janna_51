@@ -17,10 +17,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     myserialport.cpp \
-    newserialport.cpp \
     plotwindow.cpp \
-    qcustomplot.cpp \
-    serialport.cpp
+    qcustomplot.cpp
 
 HEADERS += \
     Device.h \
@@ -29,10 +27,8 @@ HEADERS += \
     common.h \
     mainwindow.h \
     myserialport.h \
-    newserialport.h \
     plotwindow.h \
-    qcustomplot.h \
-    serialport.h
+    qcustomplot.h
 
 FORMS += \
     mainwindow.ui \

@@ -59,33 +59,36 @@ private slots:
 
     void on_btnQuerySweepPoint_clicked();
 
-    void on_btnComTest_clicked();
+    void on_btnConnectSerialPort_clicked();
 
-    void on_btnSendSpecialNumber_clicked();
+    void on_btnStrQuery_clicked();
+
+    void on_btnQueryMaxAngVol_clicked();
+
+    void print_temp(qint32 data);
+    // 根据文件名，读取特定文件
+    QVector<double> readFileByName(const QString& fileName);
+
+    // 读取同一路径下的所有文件的内容
+    QVector<QVector<double>> readFilesSameDir(const QString dirctoryPath);
+
+
+
+
+    void on_btnSetMaxAngVol_clicked();
+
+    void on_btnQueryMinAngVol_clicked();
+
+    void on_btnSetMinAngVol_clicked();
 
 private:
     void printInfo(QString infoStr);
 
 
-private slots:
-    void print_temp(qint32 data);
-    // 根据文件名，读取特定文件
-   QVector<double> readFileByName(const QString& fileName);
-
-   // 读取同一路径下的所有文件的内容
-   QVector<QVector<double>> readFilesSameDir(const QString dirctoryPath);
-   void on_btnSendNumber_clicked();
-
-   void on_btnConnectSerialPort_clicked();
-
-   void on_btnStrQuery_clicked();
-
 private:
     Ui::MainWindow *ui;
 
     Server m_server;                // 下层服务
-
-    NewSerialPort m_newSerialPort;
 
     MySerialPort m_serialPort;
 

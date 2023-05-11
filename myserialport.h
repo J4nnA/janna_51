@@ -7,9 +7,10 @@
 #include <QDebug>
 #include <stdlib.h>
 #include <iostream>
+#include <QThread>
 #include "common.h"
 
-#define STEPS_PER_REV 66000
+const qint64 STEPS_PER_REV = 66000;
 
 // 对于上位机，控制速度是根据角度来的，即时间和角度的关系
 // 对于下位机，控制速度则是根据脉冲的频率
@@ -51,25 +52,72 @@ public:
     void setMinAngleVolecity(const float angleVolecity);
 
     // 查询最大角速度
-    float queryMaxAngleVolecity();
+    void queryMaxAngleVolecity();
 
     // 查询最小角速度
-    float queryMinAngleVolecity();
+    void queryMinAngleVolecity();
+
+    // 查询最大间隔
+    qint32 queryMaxDelayForUpper();
+
+    // 查询最小间隔
+    qint32 queryMinDelayForUpper();
+
+    // 查询开始时间
+    qint64 queryStartTimeForUpper();
+
+    // 查询工作时长
+    qint64 queryWorkTimeForUpper();
 
 signals:
     void retData(qint32 data);
-
+    void retMaxAngleVelocity(float value);
+    void retMinAngleVelocity(float value);
+/*****/
+signals:
+    void firstQueryFinished();
+/**打的补丁***/
 private slots:
     // 接收数据，并发射信号retData
     void reciveData();
+/*****/
+public slots:
+   void onFirstQueryFinished();
+/**打的补丁***/
 private:
     void sendCmd();
 
+    void initQuery();
+
+    void queryMinDelay();
+
+    void queryMaxDelay();   //这两个可以被用到设置角速度函数中
+
+    qint64 calAccTime(const qint64 startDelay, const qint64 stopDelay);
+
+    qint64 calStartTime(); //start work
+
+    qint64 calWorkTime();
 private:
+    enum RequestType{
+        MaxAngleVelocity = 0,
+        MinAngleVelocity,
+        InitMinDelay,
+        InitMaxDelay
+    };
+
     static QString dataBuffer;
+
     QSerialPort m_serialPort;
     Converter m_converter;
+    RequestType curRequestType;
 
+    qint32 m_minDelay;
+    qint32 m_maxDelay;      // 单位：毫秒
+    float m_maxAngVol;      // 单位：度每秒
+    float m_minAngVol;      //
+    qint64 startTime;
+    qint64 workTime;
 };
 
 

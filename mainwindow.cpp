@@ -17,6 +17,15 @@ MainWindow::MainWindow(QWidget *parent)
         printInfo(QString::number(data));
     });
 
+    // 查询最大角速度后，处理数据
+    connect(&m_serialPort, &MySerialPort::retMaxAngleVelocity, this,[=](float angleVolecity){
+       printInfo("MaxAngleVelocity: " + QString::number(angleVolecity));
+    });
+
+    // 查询最小角速度后，处理数据
+    connect(&m_serialPort, &MySerialPort::retMinAngleVelocity, this,[=](float angleVolecity){
+       printInfo("MinAngleVelocity: " + QString::number(angleVolecity));
+    });
 }
 
 MainWindow::~MainWindow()
@@ -321,30 +330,6 @@ void MainWindow::on_btnQuerySweepPoint_clicked()
 }
 
 
-void MainWindow::on_btnComTest_clicked()
-{
-
-}
-
-
-void MainWindow::on_btnSendSpecialNumber_clicked()
-{
-    connect(&m_newSerialPort, SIGNAL(newRetData(qint32)), this, SLOT(print_temp(qint32)));
-
-    m_newSerialPort.sendAndRevice(1515);
-}
-
-
-void MainWindow::on_btnSendNumber_clicked()
-{
-
-    // 获取发送数字
-    qint32 number = ui->leSendNumber->text().toInt();
-
-    // 发送数字
-    m_serialPort.sendRandomNum(number);
-}
-
 
 void MainWindow::on_btnConnectSerialPort_clicked()
 {
@@ -357,5 +342,35 @@ void MainWindow::on_btnConnectSerialPort_clicked()
 void MainWindow::on_btnStrQuery_clicked()
 {
     m_serialPort.queryMaxAngleVolecity();
+}
+
+
+void MainWindow::on_btnQueryMaxAngVol_clicked()
+{
+    // 调用下层函数，其实就是发信号，但注意查询这次要分类了
+    m_serialPort.queryMaxAngleVolecity();
+
+}
+
+
+void MainWindow::on_btnSetMaxAngVol_clicked()
+{
+    // 获取设置值
+    float angleVolecity = ui->leMaxAngVol->text().toFloat();
+    m_serialPort.setMaxAngleVolecity(angleVolecity);
+}
+
+
+void MainWindow::on_btnQueryMinAngVol_clicked()
+{
+    m_serialPort.queryMinAngleVolecity();
+}
+
+
+void MainWindow::on_btnSetMinAngVol_clicked()
+{
+    // 获取设置值
+    float angleVolecity = ui->leMinAngVol->text().toFloat();
+    m_serialPort.setMinAngleVolecity(angleVolecity);
 }
 
