@@ -12,6 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     dirPath = QCoreApplication::applicationDirPath() + "/data";
 
+    m_collectPoint = 12;
+
+    m_collectAngInt = 30.0;
+
     // 等待接收返回数据并打印
     connect(&m_serialPort, &MySerialPort::retData, this, [=](qint32 data){
         printInfo(QString::number(data));
@@ -26,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&m_serialPort, &MySerialPort::retMinAngleVelocity, this,[=](float angleVolecity){
        printInfo("MinAngleVelocity: " + QString::number(angleVolecity));
     });
+
 }
 
 MainWindow::~MainWindow()
@@ -134,7 +139,7 @@ void MainWindow::on_btnTempTest_clicked()
     // 获取当前路径，文件前缀，采集数目
     QString dirPath = QCoreApplication::applicationDirPath() + "/data";
     QString prefix = ui->leFilePrefix->text();
-    qint32 collectNum = ui->leCollectNum->text().toInt();
+    qint32 collectNum = ui->leCollectPoint->text().toInt();
     qint32 timeInterval = ui->leTimeInterval->text().toInt();
 
     // 启动转台
@@ -183,6 +188,23 @@ void MainWindow::printInfo(QString infoStr)
 {
     ui->textBrowser->append(infoStr);
 }
+
+void MainWindow::setCollectPoint(qint32 collectPoint)
+{
+    // 设置采集点数
+    m_collectPoint = collectPoint;
+    // 采集间隔也同步修改
+    m_collectAngInt = 360.0 / m_collectPoint;
+}
+
+void MainWindow::setCollectAngInt(float collectAngInt)
+{
+    m_collectAngInt = collectAngInt;
+    m_collectPoint = 360 / m_collectAngInt;
+}
+
+
+
 
 bool MainWindow::saveDataToFile(const QString &dirPath,
                                 const QString &prefix,
@@ -369,11 +391,39 @@ void MainWindow::on_btnQueryMinAngVol_clicked()
     m_serialPort.queryMinAngleVolecity();
 }
 
-
 void MainWindow::on_btnSetMinAngVol_clicked()
 {
     // 获取设置值
     float angleVolecity = ui->leMinAngVol->text().toFloat();
     m_serialPort.setMinAngleVolecity(angleVolecity);
+}
+
+
+void MainWindow::on_btnSetCollectPoint_clicked()
+{
+    qint32 collectPoint = ui->leCollectPoint->text().toInt();
+    qDebug() << "setCollectPoint: " << collectPoint;
+    setCollectPoint(collectPoint);
+}
+
+void MainWindow::on_btnSetAngleInterval_clicked()
+{
+    float collectAngInt = ui->leCollectAngInterval->text().toFloat();
+    setCollectAngInt(collectAngInt);
+}
+
+void MainWindow::on_btnQueryPointAndInterval_clicked()
+{
+    printInfo("m_collectPoint: " + QString::number(m_collectPoint));
+    printInfo("m_collectAngInt: " + QString::number(m_collectAngInt));
+}
+
+
+void MainWindow::on_btnQueryIntervalTime_clicked()
+{
+    float intervalTime = m_serialPort.queryWorkTimeForUpper() / m_collectPoint;
+    printInfo("IntervalTime: " + QString::number(intervalTime));
+    printInfo("startTime: " + QString::number(m_serialPort.queryStartTimeForUpper()));
+
 }
 

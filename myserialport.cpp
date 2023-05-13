@@ -218,12 +218,19 @@ void MySerialPort::reciveData()
             angleVolecity = m_converter.delayToAngle(dataRet, STEPS_PER_REV);
             m_maxAngVol = angleVolecity;
             emit retMaxAngleVelocity(angleVolecity);
+
+            queryStartTimeForUpper();
+            queryWorkTimeForUpper();
             qDebug() <<"angleVolecity: "<< angleVolecity;
             break;
         case MinAngleVelocity:
             angleVolecity = m_converter.delayToAngle(dataRet, STEPS_PER_REV);
             m_minAngVol = angleVolecity;
             emit retMinAngleVelocity(angleVolecity);
+
+            queryStartTimeForUpper();
+            queryWorkTimeForUpper();
+
             qDebug() <<"angleVolecity: "<< angleVolecity;
             break;
         case InitMaxDelay:
@@ -327,7 +334,7 @@ qint64 MySerialPort::calStartTime()
 qint64 MySerialPort::calWorkTime()
 {
     //  正转一圈
-    workTime = m_minDelay * 2 * STEPS_PER_REV;
+    workTime = m_minDelay * 2 * STEPS_PER_REV / 1000;
     qDebug() << "workTime: " << workTime;
     return workTime;
 }

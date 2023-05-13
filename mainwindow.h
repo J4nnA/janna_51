@@ -81,10 +81,22 @@ private slots:
 
     void on_btnSetMinAngVol_clicked();
 
+    void on_btnSetCollectPoint_clicked();
+
+
+
+    void on_btnSetAngleInterval_clicked();
+
+    void on_btnQueryPointAndInterval_clicked();
+
+    void on_btnQueryIntervalTime_clicked();
+
 private:
     void printInfo(QString infoStr);
 
+    void setCollectPoint(qint32 collectPoint);
 
+    void setCollectAngInt(float collectAngInt);
 private:
     Ui::MainWindow *ui;
 
@@ -93,6 +105,11 @@ private:
     MySerialPort m_serialPort;
 
     QString dirPath;                // 数据存放格式
+
+    qint32 m_collectPoint;            // 采集点数---只能通过函数修改
+
+    float m_collectAngInt;            // 采集间隔--只能通过函数修改
+
 };
 
 #endif // MAINWINDOW_H
