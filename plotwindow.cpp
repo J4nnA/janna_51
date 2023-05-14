@@ -22,13 +22,13 @@ void PlotWindow::plotGraph(const QVector<QVector<double> > dataArray)
     int numCurves = dataArray[0].size();
 
     // 设置X轴范围
-        ui->customPlot->xAxis->setRange(0, dataArray.size() - 1);
+        ui->customPlot->xAxis->setRange(0, dataArray.size() - 1);       // 设置x轴范围
 
         // 为每条曲线设置不同的颜色
-        QVector<QColor> colors = {Qt::red, Qt::blue, Qt::green, Qt::black};
+        QVector<QColor> colors = {Qt::red, Qt::blue, Qt::green, Qt::black}; // 颜色数组，固定大小，但是很多
 
         for (int i = 0; i < numCurves; ++i) {
-            QCPGraph *graph = ui->customPlot->addGraph();
+            QCPGraph *graph = ui->customPlot->addGraph();                   //
             graph->setPen(QPen(colors[i % colors.size()]));
 
             QVector<double> x(dataArray.size()), y(dataArray.size());
@@ -77,3 +77,35 @@ void PlotWindow::incrementalPlot(const QVector<double>& newPoints)
     ui->customPlot->replot();
     qDebug() << "draw";
 }
+
+void PlotWindow::plotData(const QVector<double>& data, int xCoord) {
+    // 创建图形映射表
+    static QMap<double, QCPGraph*> graphMap;
+    static QVector<QColor> colors = {Qt::red, Qt::blue, Qt::green, Qt::black};
+
+    for (int i = 0; i < data.size(); i += 2) {
+        double id = data[i];
+        double value = data[i + 1];
+
+        // 查看给定的编号是否已经有对应的图形
+        QCPGraph* graph;
+        if (graphMap.contains(id)) {
+            // 如果有，就使用已有的图形
+            graph = graphMap[id];
+        } else {
+            // 如果没有，就创建一个新的图形
+            graph = ui->customPlot->addGraph();
+            graph->setPen(QPen(colors[graphMap.size() % colors.size()]));
+
+            // 把新的图形添加到图形映射表中
+            graphMap[id] = graph;
+        }
+
+        // 在图形上添加新的数据点
+        graph->addData(xCoord, value);
+    }
+
+    ui->customPlot->rescaleAxes();
+    ui->customPlot->replot();
+}
+

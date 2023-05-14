@@ -596,7 +596,8 @@ void MainWindow::finalTestSave(const QString dirPath,
         ViInt32  dataNum = 0;                   // 实际采集点数
 
         // 使用qvector存储数据
-        QVector<double> dataVector;
+        QVector<double> dataVector;  // 用于保存y值的向量
+        QVector<double> idValueVector;  // 用于保存编号和对应值的向量
 
         // 获取数据
         m_server.queryCurTraceFmtData(dataArray, dataNum, M_DEVICE_TYPE::devicetype_analyzer);
@@ -607,6 +608,9 @@ void MainWindow::finalTestSave(const QString dirPath,
             double y = dataArray[j * 2 + 1];
             dataVector.append(y);
 
+            // 追加存储编号和对应值的代码
+            idValueVector.append(dataArray[j * 2]);
+            idValueVector.append(dataArray[j * 2 + 1]);
             QString str;
             str.sprintf("%d:<%.3f,%.3f>", j / 2, dataArray[j * 2], dataArray[j * 2 + 1]);
             out << str << '\n';
@@ -616,17 +620,15 @@ void MainWindow::finalTestSave(const QString dirPath,
 
 
         // 调用绘图函数
-        m_plotWindow->incrementalPlot(dataVector);
-
+        // 修改绘图函数m_plotWindow->incrementalPlot(dataVector);
+        m_plotWindow->plotData(idValueVector, i);
         // 时间间隔
         QThread::msleep(timeInterval);
 
     }
 
 
-    // 存储数据到指定文件，并填充到数组中
 
-    //
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -665,5 +667,16 @@ void MainWindow::on_btnSaveDrawOne_clicked()
     qint64 temp = m_serialPort.queryStartTimeForUpper();
     m_test->updataStartTime(1000);
     m_test->start();
+}
+
+
+void MainWindow::on_btnPlot_clicked()
+{
+    QVector<double> a = {1.0,120.0,2.0,110,3.0,100};
+    QVector<double> b = {1.0,100.0,2.0,110,3.0,120};
+    PlotWindow* plotWindow = new PlotWindow();
+    plotWindow->show();
+    plotWindow->plotData(a, 1);
+    plotWindow->plotData(b, 2);
 }
 

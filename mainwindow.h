@@ -104,6 +104,8 @@ private slots:
 
     void on_btnSaveDrawOne_clicked();
 
+    void on_btnPlot_clicked();
+
 private:
     void printInfo(QString infoStr);
 

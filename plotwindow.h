@@ -20,6 +20,8 @@ public:
     void plotGraph(const QVector<QVector<double>>dataArray);
 
     void incrementalPlot(const QVector<double>& newPoints);
+
+    void plotData(const QVector<double>& data, int xCoord);
 private:
     Ui::PlotWindow *ui;
 };
