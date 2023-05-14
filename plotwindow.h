@@ -19,6 +19,7 @@ public:
     // 画图
     void plotGraph(const QVector<QVector<double>>dataArray);
 
+    void incrementalPlot(const QVector<double>& newPoints);
 private:
     Ui::PlotWindow *ui;
 };

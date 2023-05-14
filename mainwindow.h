@@ -30,8 +30,20 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-     bool saveDataToFile(const QString& dirPath, const QString& pexfix, const qint32& collectNum, const qint32 &timeInterval)const;
+     bool saveDataToFile(const QString& dirPath,
+                         const QString& prefix,
+                         const qint32& collectNum,
+                         const qint32 &timeInterval)const;
 
+     bool saveAndRead(const QString& dirPath,
+                      const QString& prefix,
+                      const qint32& collectNum,
+                      const qint64& startTime,
+                      const qint64& intervalTime)const;
+     bool saveDrawTest(const QString& dirPath,
+                       const QString& prefix);
+signals:
+    void dataReady(const QVector<double>& data);
 private slots:
     void on_btnConnect_clicked();
 
@@ -72,9 +84,6 @@ private slots:
     // 读取同一路径下的所有文件的内容
     QVector<QVector<double>> readFilesSameDir(const QString dirctoryPath);
 
-
-
-
     void on_btnSetMaxAngVol_clicked();
 
     void on_btnQueryMinAngVol_clicked();
@@ -83,13 +92,17 @@ private slots:
 
     void on_btnSetCollectPoint_clicked();
 
-
-
     void on_btnSetAngleInterval_clicked();
 
     void on_btnQueryPointAndInterval_clicked();
 
     void on_btnQueryIntervalTime_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void onTimeReady();
+
+    void on_btnSaveDrawOne_clicked();
 
 private:
     void printInfo(QString infoStr);
@@ -97,6 +110,11 @@ private:
     void setCollectPoint(qint32 collectPoint);
 
     void setCollectAngInt(float collectAngInt);
+
+    void finalTestSave(const QString dirPath,
+                       const QString prefix,
+                       const qint32 collectPoint,
+                       const qint64 timeInterval)const;
 private:
     Ui::MainWindow *ui;
 
@@ -109,7 +127,10 @@ private:
     qint32 m_collectPoint;            // 采集点数---只能通过函数修改
 
     float m_collectAngInt;            // 采集间隔--只能通过函数修改
+public:
+    PlotWindow* m_plotWindow;
 
+    TestNew * m_test;
 };
 
 #endif // MAINWINDOW_H

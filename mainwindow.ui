@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>658</width>
-    <height>1008</height>
+    <width>688</width>
+    <height>1068</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -714,9 +714,9 @@
         </widget>
        </item>
        <item row="1" column="4">
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="btnSaveDrawOne">
          <property name="text">
-          <string>启动（只保一文件）</string>
+          <string>存一文件且不需等待</string>
          </property>
         </widget>
        </item>
@@ -755,8 +755,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>658</width>
-     <height>21</height>
+     <width>688</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

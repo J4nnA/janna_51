@@ -16,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_collectAngInt = 30.0;
 
+    m_plotWindow = new PlotWindow(this);
+
+    m_test = new TestNew(5000);
     // 等待接收返回数据并打印
     connect(&m_serialPort, &MySerialPort::retData, this, [=](qint32 data){
         printInfo(QString::number(data));
@@ -31,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
        printInfo("MinAngleVelocity: " + QString::number(angleVolecity));
     });
 
+    // 启动采集绘图功能
+    connect(m_test, &TestNew::readyCollect, this, &MainWindow::onTimeReady);
 }
 
 MainWindow::~MainWindow()
@@ -270,6 +275,120 @@ bool MainWindow::saveDataToFile(const QString &dirPath,
     return 1;
 }
 
+bool MainWindow::saveAndRead(const QString &dirPath,
+                             const QString &prefix,
+                             const qint32 &collectNum,
+                             const qint64 &startTime,
+                             const qint64 &intervalTime) const
+{
+    // 目录与文件前缀
+    QDir dir(dirPath);
+    QString filePrefix = dirPath + '/' + prefix;
+    QString fileType = ".txt";
+
+    // 检测目录是否存在
+    if(!dir.exists())
+    {
+        if(dir.mkpath(dirPath))
+        {
+            qDebug() << "Directory created successfully.";
+        }
+        else
+        {
+            qDebug() << "Failed to create directory.";
+            return false; // Failed to create the directory, return from the function
+        }
+    }
+
+    // 生成绘图窗口对象
+    PlotWindow *plotWindow = new PlotWindow();
+    plotWindow->show();
+
+    // 存储数据，生成指定数目的文件
+    for(int i = 0; i < collectNum; i++)
+    {
+        QString num;
+        num.sprintf("%0*d", 3, i);
+        QString fileName = filePrefix + num + fileType;
+
+        QFile file(fileName);
+
+        // 打开文件，覆盖模式
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qDebug() << "Failed to open file for writing.";
+            continue; // Skip this iteration if failed to open the file
+        }
+
+        QTextStream out(&file);
+
+        ViReal32 dataArray[Server::DEVICE_MAX_POINT_NUM * 2];
+        ViInt32  dataNum = 0;                   // 实际采集点数
+
+        // 使用qvector存储数据
+        QVector<double> dataVector;
+
+        // 获取数据
+        m_server.queryCurTraceFmtData(dataArray, dataNum, M_DEVICE_TYPE::devicetype_analyzer);
+
+        // 存储数据
+        for(int j = 0; j < dataNum / 2; j++)
+        {
+            double y = dataArray[j * 2 + 1];
+            dataVector.append(y);
+
+            QString str;
+            str.sprintf("%d:<%.3f,%.3f>", j / 2, dataArray[j * 2], dataArray[j * 2 + 1]);
+            out << str << '\n';
+        }
+        qDebug() << "save !";
+
+        // 调用绘图函数
+        plotWindow->incrementalPlot(dataVector);
+
+        // 时间间隔
+        QThread::msleep(intervalTime);
+
+    }
+
+    return true;
+}
+
+bool MainWindow::saveDrawTest(const QString &dirPath, const QString &prefix)
+{
+    // 目录与文件前缀
+    QDir dir(dirPath);
+    QString filePrefix = dirPath + '/' + prefix;
+    QString fileType = ".txt";
+
+    qDebug() << "dirPath:" << dirPath;
+    // 检测目录是否存在
+    if(!dir.exists())
+    {
+        if(dir.mkpath(dirPath))
+        {
+            qDebug() << "Directory created successfully.";
+        }
+        else
+        {
+            qDebug() << "Failed to create directory.";
+            return false; // Failed to create the directory, return from the function
+        }
+    }
+
+
+    QVector<double> temp;
+    temp.append(1.0);
+    temp.append(2.0);
+    temp.append(2.0);
+    temp.append(3.0);
+
+    // 绘图
+
+    emit dataReady(temp);
+}
+
+
+
 void MainWindow::print_temp(qint32 data)
 {
     printInfo(QString::number(data));
@@ -294,7 +413,7 @@ QVector<double>  MainWindow::readFileByName(const QString &filename)
         QRegularExpressionMatch match = re.match(line);
 
         if (match.hasMatch()) {
-            double x = match.captured(1).toDouble();
+            //double x = match.captured(1).toDouble();
             double y = match.captured(2).toDouble();
 
             data.append(y);
@@ -425,5 +544,126 @@ void MainWindow::on_btnQueryIntervalTime_clicked()
     printInfo("IntervalTime: " + QString::number(intervalTime));
     printInfo("startTime: " + QString::number(m_serialPort.queryStartTimeForUpper()));
 
+}
+
+void MainWindow::finalTestSave(const QString dirPath,
+                               const QString prefix,
+                               const qint32 collectPoint,
+                               const qint64 timeInterval)const
+{
+    qDebug() << "MainWindow::finalTestSave.";
+    // 目录与文件前缀
+    QDir dir(dirPath);
+    QString filePrefix = dirPath + '/' + prefix;
+    QString fileType = ".txt";
+
+    // 检测目录是否存在
+    if(!dir.exists())
+    {
+        if(dir.mkpath(dirPath))
+        {
+            qDebug() << "Directory created successfully.";
+        }
+        else
+        {
+            qDebug() << "Failed to create directory.";
+            return; // Failed to create the directory, return from the function
+        }
+    }
+    // 打开窗口
+    m_plotWindow->show();
+
+    qDebug() << "start Loop";
+    for(int i = 0; i < collectPoint; i++)
+    {
+
+        QString num;
+        num.sprintf("%0*d", 3, i);
+        // 生成保存文件名
+        QString fileName = filePrefix + num + fileType;
+
+        QFile file(fileName);
+
+        // 打开文件，覆盖模式
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qDebug() << "Failed to open file for writing.";
+            continue; // Skip this iteration if failed to open the file
+        }
+
+        QTextStream out(&file);
+
+        ViReal32 dataArray[Server::DEVICE_MAX_POINT_NUM * 2];
+        ViInt32  dataNum = 0;                   // 实际采集点数
+
+        // 使用qvector存储数据
+        QVector<double> dataVector;
+
+        // 获取数据
+        m_server.queryCurTraceFmtData(dataArray, dataNum, M_DEVICE_TYPE::devicetype_analyzer);
+        qDebug() << "1111";
+        // 存储数据
+        for(int j = 0; j < dataNum / 2; j++)
+        {
+            double y = dataArray[j * 2 + 1];
+            dataVector.append(y);
+
+            QString str;
+            str.sprintf("%d:<%.3f,%.3f>", j / 2, dataArray[j * 2], dataArray[j * 2 + 1]);
+            out << str << '\n';
+        }
+        qDebug() << "save !";
+
+
+
+        // 调用绘图函数
+        m_plotWindow->incrementalPlot(dataVector);
+
+        // 时间间隔
+        QThread::msleep(timeInterval);
+
+    }
+
+
+    // 存储数据到指定文件，并填充到数组中
+
+    //
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    // 获取当前路径，文件前缀，采集数目
+    QString dirPath = QCoreApplication::applicationDirPath() + "/data";
+    QString prefix = ui->leFilePrefix->text();
+    qint32 collectNum = ui->leCollectPoint->text().toInt();
+    qint64 startTime = m_serialPort.queryStartTimeForUpper();
+    qint64 timeInterval = m_serialPort.queryWorkTimeForUpper() / m_collectPoint;
+
+    qDebug() << "start";
+    SaveAndDraw * saveAndDraw = new SaveAndDraw(*this, dirPath, prefix, collectNum, startTime, timeInterval);
+    QThreadPool::globalInstance()->start(saveAndDraw);
+}
+
+void MainWindow::onTimeReady()
+{
+    qDebug() << "ready";
+    // 准备绘图函数
+    // 获取当前路径，文件前缀，采集数目
+    QString dirPath = QCoreApplication::applicationDirPath() + "/data";
+    QString prefix = ui->leFilePrefix->text();
+    qint64 timeInterval = m_serialPort.queryWorkTimeForUpper() / m_collectPoint;
+
+    // 存储数据，绘制图像
+    finalTestSave(dirPath, prefix, 15, 2000);
+}
+
+
+
+
+void MainWindow::on_btnSaveDrawOne_clicked()
+{
+    // 启动计时
+    qint64 temp = m_serialPort.queryStartTimeForUpper();
+    m_test->updataStartTime(1000);
+    m_test->start();
 }
 

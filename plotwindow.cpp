@@ -46,3 +46,34 @@ void PlotWindow::plotGraph(const QVector<QVector<double> > dataArray)
         ui->customPlot->rescaleAxes();
         ui->customPlot->replot();
 }
+
+void PlotWindow::incrementalPlot(const QVector<double>& newPoints)
+{
+    static QVector<double> dataVector; // 用于存储所有数据的静态向量
+    static QCPGraph* graph = nullptr;  // 用于存储图形的静态指针
+
+    // 将新的数据点添加到数据向量中
+    for (double point : newPoints) {
+        dataVector.push_back(point);
+    }
+
+    // 如果这是第一次调用函数，创建新的图形
+    if (graph == nullptr) {
+        graph = ui->customPlot->addGraph();
+        graph->setPen(QPen(Qt::red));
+    }
+
+    // 创建x和y的向量
+    QVector<double> x(dataVector.size() / 2), y(dataVector.size() / 2);
+    for (int j = 0; j < dataVector.size() / 2; ++j) {
+        x[j] = j;
+        y[j] = dataVector[2*j+1];  // 假设数据向量中的y值在每对点的第二个位置
+    }
+
+    // 更新图形的数据并重新绘制
+    graph->setData(x, y);
+    ui->customPlot->xAxis->setRange(0, x.size() - 1);  // 更新x轴的范围
+    ui->customPlot->rescaleAxes();
+    ui->customPlot->replot();
+    qDebug() << "draw";
+}
