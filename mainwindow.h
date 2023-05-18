@@ -106,6 +106,8 @@ private slots:
 
     void on_btnPlot_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     void printInfo(QString infoStr);
 
@@ -134,5 +136,38 @@ public:
 
     TestNew * m_test;
 };
+
+class FileSaver : public QObject {
+    Q_OBJECT
+
+public:
+    FileSaver(const QString& fileName, const QVector<double>& data, QObject* parent = nullptr)
+        : QObject(parent), m_fileName(fileName), m_data(data) {}
+
+public slots:
+    void saveToFile() {
+        qDebug() << "filesaver: data.size(): " << m_data.size();
+        QFile file(m_fileName);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qDebug() << "Failed to open file for writing.";
+            return;
+        }
+        QTextStream out(&file);
+        for (int i = 0; i < m_data.size(); i += 2) {
+            QString str;
+            str.sprintf("%d:<%.3f,%.3f>", i / 2, m_data[i], m_data[i + 1]);
+            out << str << '\n';
+        }
+        emit finished();
+    }
+
+signals:
+    void finished();
+
+private:
+    QString m_fileName;
+    QVector<double> m_data;
+};
+
 
 #endif // MAINWINDOW_H

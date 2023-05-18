@@ -340,7 +340,6 @@ bool MainWindow::saveAndRead(const QString &dirPath,
             str.sprintf("%d:<%.3f,%.3f>", j / 2, dataArray[j * 2], dataArray[j * 2 + 1]);
             out << str << '\n';
         }
-        qDebug() << "save !";
 
         // 调用绘图函数
         plotWindow->incrementalPlot(dataVector);
@@ -570,27 +569,16 @@ void MainWindow::finalTestSave(const QString dirPath,
             return; // Failed to create the directory, return from the function
         }
     }
+
     // 打开窗口
     m_plotWindow->show();
 
-    qDebug() << "start Loop";
     for(int i = 0; i < collectPoint; i++)
     {
-
         QString num;
         num.sprintf("%0*d", 3, i);
         // 生成保存文件名
         QString fileName = filePrefix + num + fileType;
-
-        QFile file(fileName);
-
-        // 打开文件，覆盖模式
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            qDebug() << "Failed to open file for writing.";
-            continue; // Skip this iteration if failed to open the file
-        }
-
-        QTextStream out(&file);
 
         ViReal32 dataArray[Server::DEVICE_MAX_POINT_NUM * 2];
         ViInt32  dataNum = 0;                   // 实际采集点数
@@ -601,7 +589,7 @@ void MainWindow::finalTestSave(const QString dirPath,
 
         // 获取数据
         m_server.queryCurTraceFmtData(dataArray, dataNum, M_DEVICE_TYPE::devicetype_analyzer);
-        qDebug() << "1111";
+
         // 存储数据
         for(int j = 0; j < dataNum / 2; j++)
         {
@@ -611,25 +599,29 @@ void MainWindow::finalTestSave(const QString dirPath,
             // 追加存储编号和对应值的代码
             idValueVector.append(dataArray[j * 2]);
             idValueVector.append(dataArray[j * 2 + 1]);
-            QString str;
-            str.sprintf("%d:<%.3f,%.3f>", j / 2, dataArray[j * 2], dataArray[j * 2 + 1]);
-            out << str << '\n';
         }
-        qDebug() << "save !";
 
+        qDebug() << "idValueVector: " << idValueVector.size();
 
+        // 创建保存到文件的操作并将其放入新的线程中
+        FileSaver* fileSaver = new FileSaver(fileName, idValueVector);
+        QThread* thread = new QThread;
+        fileSaver->moveToThread(thread);
+        connect(thread, &QThread::started, fileSaver, &FileSaver::saveToFile);
+        connect(fileSaver, &FileSaver::finished, thread, &QThread::quit);
+        connect(fileSaver, &FileSaver::finished, fileSaver, &FileSaver::deleteLater);
+        connect(thread, &QThread::finished, thread, &QThread::deleteLater);
+        thread->start();
 
         // 调用绘图函数
-        // 修改绘图函数m_plotWindow->incrementalPlot(dataVector);
         m_plotWindow->plotData(idValueVector, i);
+        QCoreApplication::processEvents();  // 添加这行代码
         // 时间间隔
         QThread::msleep(timeInterval);
-
     }
-
-
-
 }
+
+
 
 void MainWindow::on_pushButton_4_clicked()
 {
@@ -655,7 +647,7 @@ void MainWindow::onTimeReady()
     qint64 timeInterval = m_serialPort.queryWorkTimeForUpper() / m_collectPoint;
 
     // 存储数据，绘制图像
-    finalTestSave(dirPath, prefix, 15, 2000);
+    finalTestSave(dirPath, prefix, m_collectPoint, timeInterval);
 }
 
 
@@ -663,9 +655,13 @@ void MainWindow::onTimeReady()
 
 void MainWindow::on_btnSaveDrawOne_clicked()
 {
+
+    qDebug() << "MainWindow::on_btnSaveDrawOne_clicked";
+    // 启动转台
+    m_serialPort.startWork();
     // 启动计时
     qint64 temp = m_serialPort.queryStartTimeForUpper();
-    m_test->updataStartTime(1000);
+    m_test->updataStartTime(temp);
     m_test->start();
 }
 
@@ -678,5 +674,11 @@ void MainWindow::on_btnPlot_clicked()
     plotWindow->show();
     plotWindow->plotData(a, 1);
     plotWindow->plotData(b, 2);
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+
 }
 
